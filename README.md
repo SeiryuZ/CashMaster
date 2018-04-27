@@ -31,7 +31,6 @@ According to our opinion and standards, there are no financial manager app that 
 
 * Adam: Designer, main programmer
 * Ryan: Tester, and programmer
-* Brian: Researcher and programmer
 
 ### Weekly Plan
 
