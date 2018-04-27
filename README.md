@@ -4,7 +4,6 @@ This is the readme file for the final of the Wireless Mobile Software Engineerin
 
 ### Developers:
 * Adam Halim Waskito
-* Ryan Adiguna
 
 ## Problem
 
@@ -26,11 +25,6 @@ With the Cash Master, you could insert your spendings and income into your app, 
 ### Related work
 
 According to our opinion and standards, there are no financial manager app that is easy to use nor with the functionalities that we would have wanted in the market right now. That is part of why the idea to make this app appeared.
-
-### Responsibilities
-
-* Adam: Designer, main programmer
-* Ryan: Tester, and programmer
 
 ### Weekly Plan
 
