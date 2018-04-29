@@ -16,6 +16,10 @@ public class TransactionHistory extends AppCompatActivity {
     public void MoveToNewSpendingActivity(View view){
         Intent intent = new Intent(this, AddNewSpending.class);
         startActivity(intent);
+    }
 
+    public void MoveToNewIncomePage(View view){
+        Intent intent = new Intent(this, AddNewIncome.class);
+        startActivity(intent);
     }
 }

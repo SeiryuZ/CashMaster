@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.halim.adam.cashmaster.TransactionHistory">
+    tools:context="com.halim.adam.cashmaster.TransactionHistory"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/buttonNewSpending"
@@ -12,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
-        android:text="New Spending"
         android:onClick="MoveToNewSpendingActivity"
+        android:text="New Spending"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,11 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="15dp"
+        android:onClick="MoveToNewIncomePage"
         android:text="New Income"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transactionList" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/transactionList"

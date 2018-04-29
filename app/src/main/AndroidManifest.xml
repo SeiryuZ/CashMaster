@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddNewSpending"></activity>
+        <activity android:name=".AddNewSpending" />
+        <activity android:name=".AddNewIncome"></activity>
     </application>
 
 </manifest>

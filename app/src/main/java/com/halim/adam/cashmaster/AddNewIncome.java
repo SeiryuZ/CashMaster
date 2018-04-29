@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class AddNewSpending extends Activity {
+public class AddNewIncome extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_spending);
+        setContentView(R.layout.activity_add_new_income);
     }
 
     public void MoveToTransactionHistoryPage(View view){
