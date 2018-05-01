@@ -14,7 +14,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:onClick="MoveToNewSpendingActivity"
-        android:text="New Spending"
+        android:text="@string/new_spending"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -25,7 +25,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="15dp"
         android:onClick="MoveToNewIncomePage"
-        android:text="New Income"
+        android:text="@string/new_income"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

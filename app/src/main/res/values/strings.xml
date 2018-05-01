@@ -1,5 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">CashMaster</string>
     <string name="name">Name</string>
+    <string name="date">Date</string>
+    <string name="amount_of_spending">Amount of spending</string>
+    <string name="date_of_spending">Date of spending</string>
+    <string name="name_of_spending">Name of spending</string>
+    <string name="name_of_income">Name of income</string>
     <string name="back">Back</string>
+    <string name="date_of_income">Date of income</string>
+    <string name="amount_of_income">Amount of income</string>
+    <string name="add">Add</string>
+    <string name="new_spending">New Spending</string>
+    <string name="new_income">New Income</string>
 </resources>
