@@ -5,4 +5,5 @@ package com.halim.adam.cashmaster.Objects;
  */
 
 public class Category {
+    private int id;
 }

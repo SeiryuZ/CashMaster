@@ -5,4 +5,6 @@ package com.halim.adam.cashmaster.Objects;
  */
 
 public class Spending {
+    private int id;
+    private String name;
 }
