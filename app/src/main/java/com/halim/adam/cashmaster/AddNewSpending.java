@@ -13,6 +13,10 @@ public class AddNewSpending extends Activity {
         setContentView(R.layout.activity_add_new_spending);
     }
 
+    public void GetInput(){
+
+    }
+
     public void MoveToTransactionHistoryPage(View view){
         Intent intent = new Intent(this, TransactionHistory.class);
         startActivity(intent);
