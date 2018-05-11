@@ -19,17 +19,19 @@ public class TransactionHistory extends Activity {
         setContentView(R.layout.activity_transaction_history);
         transactionList = (TextView) findViewById(R.id.transactionList);
 
-        SQLiteDatabase db = new DatabaseHelper(this).getWritableDatabase();
-        cursor = db.rawQuery("SELECT * FROM category", null);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dbHelper.InsertIncome("Baby", 800);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        cursor = db.rawQuery("SELECT * FROM income", null);
         cursor.moveToFirst();
-        if(cursor.getCount()<=0){
-            transactionList.setText("Still Empty!");
-        }
-        else{
-//            transactionList.setText(cursor.getString((cursor.getColumnIndex("name"))));
+        if(cursor.moveToFirst()){
             for(int c = 0; c < cursor.getColumnCount(); c++){
                 transactionList.append(cursor.getString(c).toString() + ", ");
             }
+        }
+        else{
+            transactionList.setText("Still Empty!");
         }
     }
 
