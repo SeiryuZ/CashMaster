@@ -18,13 +18,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE category ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE );";
         db.execSQL(sql);
-        sql = "CREATE TABLE income ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price NUMERIC, date TEXT DEFAULT 'date(''now'')');";
+        sql = "CREATE TABLE income ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price NUMERIC, date TEXT DEFAULT (date('now')));";
         db.execSQL(sql);
         sql = "CREATE TABLE jar ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion INTEGER );";
         db.execSQL(sql);
-        sql = "CREATE TABLE spending ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT 'date(''now'')', price NUMERIC, categoryId INTEGER, jarId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL );";
+        sql = "CREATE TABLE spending ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, jarId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL );";
         db.execSQL(sql);
         sql = "INSERT INTO category (name) VALUES ('Drinks');";
+        db.execSQL(sql);
+        sql = "INSERT INTO income (name, price) VALUES ('Weekly', '300000')";
         db.execSQL(sql);
     }
 
