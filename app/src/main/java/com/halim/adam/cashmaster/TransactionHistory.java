@@ -20,7 +20,7 @@ public class TransactionHistory extends Activity {
         transactionList = (TextView) findViewById(R.id.transactionList);
 
         SQLiteDatabase db = new DatabaseHelper(this).getWritableDatabase();
-        cursor = db.rawQuery("SELECT * FROM income", null);
+        cursor = db.rawQuery("SELECT * FROM category", null);
         cursor.moveToFirst();
         if(cursor.getCount()<=0){
             transactionList.setText("Still Empty!");

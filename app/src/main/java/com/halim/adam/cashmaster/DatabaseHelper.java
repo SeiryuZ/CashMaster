@@ -24,10 +24,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         sql = "CREATE TABLE spending ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, jarId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL );";
         db.execSQL(sql);
-        sql = "INSERT INTO category (name) VALUES ('Drinks');";
-        db.execSQL(sql);
         sql = "INSERT INTO income (name, price) VALUES ('Weekly', '300000')";
         db.execSQL(sql);
+        db.close();
     }
 
     @Override

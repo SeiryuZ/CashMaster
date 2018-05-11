@@ -5,4 +5,7 @@ package com.halim.adam.cashmaster.Objects;
  */
 
 public class Jar {
+    private int id;
+    private String name;
+    private float price;
 }
