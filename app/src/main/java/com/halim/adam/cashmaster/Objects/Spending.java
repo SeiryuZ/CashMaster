@@ -14,6 +14,17 @@ public class Spending {
     private int categoryId;
     private int jarId;
 
+    public Spending(){}
+
+    public Spending(int id, String name, Date date, float price, int categoryId, int jarId) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.price = price;
+        this.categoryId = categoryId;
+        this.jarId = jarId;
+    }
+
     public int getId() {
         return id;
     }

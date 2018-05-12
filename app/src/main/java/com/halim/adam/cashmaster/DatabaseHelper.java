@@ -1,11 +1,15 @@
 package com.halim.adam.cashmaster;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Debug;
 import android.util.Log;
+
+import com.halim.adam.cashmaster.Objects.Category;
+import com.halim.adam.cashmaster.Objects.Income;
 
 import java.util.Date;
 
@@ -97,4 +101,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*
     GET FROM TABLES -------------------------------------------------------------------------------------
      */
+
+    public Category GetCategory(int id){
+        Category category = new Category();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM category WHERE id = '" + id + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            category.setId(cursor.getInt(0));
+            category.setName(cursor.getString(1));
+
+            return category;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public Income GetIncome(int id){
+        Income income = new Income();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM income WHERE id = '" + id + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            income.setId(cursor.getInt(0));
+            income.setName(cursor.getString(1));
+
+            return income;
+        }
+        else{
+            return null;
+        }
+    }
 }

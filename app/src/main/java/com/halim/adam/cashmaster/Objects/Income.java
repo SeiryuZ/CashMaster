@@ -12,6 +12,15 @@ public class Income {
     private float price;
     private Date date;
 
+    public Income(){}
+
+    public Income(int id, String name, float price, Date date){
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.date = date;
+    }
+
     public int getId() {
         return id;
     }

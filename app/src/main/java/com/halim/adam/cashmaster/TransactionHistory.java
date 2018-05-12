@@ -9,8 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.halim.adam.cashmaster.Objects.Category;
+
 public class TransactionHistory extends Activity {
-    protected Cursor cursor;
     TextView transactionList;
 
     @Override
@@ -20,19 +21,8 @@ public class TransactionHistory extends Activity {
         transactionList = (TextView) findViewById(R.id.transactionList);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.InsertIncome("Baby", 800);
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        cursor = db.rawQuery("SELECT * FROM income", null);
-        cursor.moveToFirst();
-        if(cursor.moveToFirst()){
-            for(int c = 0; c < cursor.getColumnCount(); c++){
-                transactionList.append(cursor.getString(c).toString() + ", ");
-            }
-        }
-        else{
-            transactionList.setText("Still Empty!");
-        }
+        Category cat = dbHelper.GetCategory(3);
+        transactionList.setText(cat.getName());
     }
 
     public void MoveToNewSpendingActivity(View view){
