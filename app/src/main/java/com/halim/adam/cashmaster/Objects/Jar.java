@@ -7,14 +7,14 @@ package com.halim.adam.cashmaster.Objects;
 public class Jar {
     private int id;
     private String name;
-    private float price;
+    private float portion;
 
     public Jar(){}
 
-    public Jar(int id, String name, float price){
+    public Jar(int id, String name, float portion){
         this.id = id;
         this.name = name;
-        this.price = price;
+        this.portion = portion;
     }
 
     public int getId() {
@@ -33,11 +33,11 @@ public class Jar {
         this.name = name;
     }
 
-    public float getPrice() {
-        return price;
+    public float getPortion() {
+        return portion;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setPortion(float portion) {
+        this.portion = portion;
     }
 }

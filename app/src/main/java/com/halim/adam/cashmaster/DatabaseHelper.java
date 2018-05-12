@@ -10,7 +10,11 @@ import android.util.Log;
 
 import com.halim.adam.cashmaster.Objects.Category;
 import com.halim.adam.cashmaster.Objects.Income;
+import com.halim.adam.cashmaster.Objects.Jar;
+import com.halim.adam.cashmaster.Objects.Spending;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -43,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    INSERT TO TABLES ---------------------------------------------------------------------------------------------
+    INSERT TO TABLES -------------------------------------------------------------------------------
      */
 
     /**
@@ -99,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    GET FROM TABLES -------------------------------------------------------------------------------------
+    SELECT FROM TABLES WITH ID ---------------------------------------------------------------------
      */
 
     public Category GetCategory(int id){
@@ -120,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Income GetIncome(int id){
+    public Income GetIncome(int id) throws ParseException {
         Income income = new Income();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -130,8 +134,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             income.setId(cursor.getInt(0));
             income.setName(cursor.getString(1));
+            income.setPrice(cursor.getFloat(2));
+            income.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(3)));
 
             return income;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public Spending GetSpending(int id) throws ParseException {
+        Spending spending = new Spending();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM spending WHERE id = '" + id + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            spending.setId(cursor.getInt(0));
+            spending.setName(cursor.getString(1));
+            spending.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(2)));
+            spending.setPrice(cursor.getFloat(3));
+            spending.setCategoryId(cursor.getInt(4));
+            spending.setJarId(cursor.getInt(5));
+
+            return spending;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public Jar GetJar(int id){
+        Jar jar = new Jar();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM jar WHERE id = '" + id + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            jar.setId(cursor.getInt(0));
+            jar.setName(cursor.getString(1));
+            jar.setPortion(cursor.getFloat(2));
+
+            return jar;
         }
         else{
             return null;
