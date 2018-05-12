@@ -15,6 +15,7 @@ import com.halim.adam.cashmaster.Objects.Spending;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -61,15 +62,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-
     public void InsertIncome(String name, float price, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO income (name, price, date) VALUES ('" + name + "', '" + price + "', '" + date +  "');";
+        String sql = "INSERT INTO income (name, price, date) VALUES ('" + name + "', '" + price + "', '" + new SimpleDateFormat("yyyy-MM-dd").format(date) +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-
     public void InsertIncome(String name, float price){
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "INSERT INTO income (name, price) VALUES ('" + name + "', '" + price + "');";
@@ -77,7 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-
     public void InsertJar(String name, int portion){
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "INSERT INTO jar (name, portion) VALUES ('" + name + "', '" + portion + "');";
@@ -85,15 +83,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-
     public void InsertSpending(String name, float price, int categoryId, int jarId, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, date, price, categoryId, jarId) VALUES ('" + name + "', '" + date + "', '" + price + "', '" + categoryId + "', '" + jarId +  "');";
+        String sql = "INSERT INTO spending (name, date, price, categoryId, jarId) VALUES ('" + name + "', '" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', '" + price + "', '" + categoryId + "', '" + jarId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-
     public void InsertSpending(String name, float price, int categoryId, int jarId){
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "INSERT INTO spending (name, price, categoryId, jarId) VALUES ('" + name + "', '" + price + "', '" + categoryId + "', '" + jarId +  "');";
@@ -123,7 +119,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
-
     public Income GetIncome(int id) throws ParseException {
         Income income = new Income();
 
@@ -143,7 +138,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
-
     public Spending GetSpending(int id) throws ParseException {
         Spending spending = new Spending();
 
@@ -165,7 +159,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
-
     public Jar GetJar(int id){
         Jar jar = new Jar();
 
@@ -179,6 +172,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             jar.setPortion(cursor.getFloat(2));
 
             return jar;
+        }
+        else{
+            return null;
+        }
+    }
+
+    /*
+    SELECT FROM A DATE
+     */
+
+    public ArrayList<Spending> GetSpendingFromDate(Date date) throws ParseException {
+        ArrayList<Spending> spendingArrayList = new ArrayList<Spending>();
+        Spending spending = new Spending();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM spending WHERE date > '" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            for(int c = 0; c < cursor.getCount(); c++) {
+                spending.setId(cursor.getInt(0));
+                spending.setName(cursor.getString(1));
+                spending.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(2)));
+                spending.setPrice(cursor.getFloat(3));
+                spending.setCategoryId(cursor.getInt(4));
+                spending.setJarId(cursor.getInt(5));
+
+                spendingArrayList.add(spending);
+            }
+            return spendingArrayList;
         }
         else{
             return null;
