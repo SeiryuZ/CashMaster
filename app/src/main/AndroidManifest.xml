@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddNewSpending" />
-        <activity android:name=".AddNewIncome"></activity>
+        <activity android:name=".AddNewIncome" />
+        <activity android:name=".AddNewJar" />
+        <activity android:name=".Objects.AddNewCategory"></activity>
     </application>
 
 </manifest>
