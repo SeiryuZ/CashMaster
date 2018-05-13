@@ -18,8 +18,9 @@
         </activity>
         <activity android:name=".AddNewSpending" />
         <activity android:name=".AddNewIncome" />
-        <activity android:name=".AddNewJar" />
-        <activity android:name=".Objects.AddNewCategory"></activity>
+        <activity android:name=".AddNewCategory" />
+        <activity android:name=".Statistics" />
+        <activity android:name=".AddNewBudget"></activity>
     </application>
 
 </manifest>

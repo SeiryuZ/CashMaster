@@ -1,17 +1,13 @@
 package com.halim.adam.cashmaster.Objects;
 
-/**
- * Created by Adam on 27-Apr-18.
- */
-
-public class Jar {
+public class Budget {
     private int id;
     private String name;
     private float portion;
 
-    public Jar(){}
+    public Budget(){}
 
-    public Jar(int id, String name, float portion){
+    public Budget(int id, String name, float portion){
         this.id = id;
         this.name = name;
         this.portion = portion;

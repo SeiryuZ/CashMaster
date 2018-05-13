@@ -2,24 +2,16 @@ package com.halim.adam.cashmaster;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.halim.adam.cashmaster.Objects.Category;
-import com.halim.adam.cashmaster.Objects.Jar;
 import com.halim.adam.cashmaster.Objects.Spending;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 public class TransactionHistory extends Activity {
     TextView transactionList;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +21,6 @@ public class TransactionHistory extends Activity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
-        try {
-            dbHelper.InsertSpending("IN", 400, 1, 1, dateFormat.parse("2018-09-22"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         Spending spending = null;
         try {
             spending = dbHelper.GetSpending(1);

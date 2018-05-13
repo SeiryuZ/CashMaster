@@ -5,12 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.os.Debug;
-import android.util.Log;
 
 import com.halim.adam.cashmaster.Objects.Category;
 import com.halim.adam.cashmaster.Objects.Income;
-import com.halim.adam.cashmaster.Objects.Jar;
+import com.halim.adam.cashmaster.Objects.Budget;
 import com.halim.adam.cashmaster.Objects.Spending;
 
 import java.text.ParseException;
@@ -21,6 +19,7 @@ import java.util.Date;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "cash_master.db";
     private static final int DATABASE_VERSION = 3;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
@@ -34,10 +33,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sql = "CREATE TABLE income ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price NUMERIC, date TEXT DEFAULT (date('now')));";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE jar ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion INTEGER );";
+        sql = "CREATE TABLE budget ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion INTEGER );";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE spending ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, jarId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL );";
+        sql = "CREATE TABLE spending ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, budgetId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL );";
         stmt = db.compileStatement(sql);
         stmt.execute();
     }
@@ -48,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
-    INSERT TO TABLES -------------------------------------------------------------------------------
+    INSERT TO TABLES
      */
 
     /**
@@ -64,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void InsertIncome(String name, float price, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO income (name, price, date) VALUES ('" + name + "', '" + price + "', '" + new SimpleDateFormat("yyyy-MM-dd").format(date) +  "');";
+        String sql = "INSERT INTO income (name, price, date) VALUES ('" + name + "', '" + price + "', '" + DATE_FORMAT.format(date) +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -76,30 +75,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-    public void InsertJar(String name, int portion){
+    public void InsertBudget(String name, int portion){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO jar (name, portion) VALUES ('" + name + "', '" + portion + "');";
+        String sql = "INSERT INTO budget (name, portion) VALUES ('" + name + "', '" + portion + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertSpending(String name, float price, int categoryId, int jarId, Date date){
+    public void InsertSpending(String name, float price, int categoryId, int budgetId, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, date, price, categoryId, jarId) VALUES ('" + name + "', '" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "', '" + price + "', '" + categoryId + "', '" + jarId +  "');";
+        String sql = "INSERT INTO spending (name, date, price, categoryId, budgetId) VALUES ('" + name + "', '" + DATE_FORMAT.format(date) + "', '" + price + "', '" + categoryId + "', '" + budgetId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertSpending(String name, float price, int categoryId, int jarId){
+    public void InsertSpending(String name, float price, int categoryId, int budgetId){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, price, categoryId, jarId) VALUES ('" + name + "', '" + price + "', '" + categoryId + "', '" + jarId +  "');";
+        String sql = "INSERT INTO spending (name, price, categoryId, budgetId) VALUES ('" + name + "', '" + price + "', '" + categoryId + "', '" + budgetId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
 
     /*
-    SELECT FROM TABLES WITH ID ---------------------------------------------------------------------
+    SELECT FROM TABLES WITH ID
      */
 
     public Category GetCategory(int id){
@@ -113,9 +112,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             category.setId(cursor.getInt(0));
             category.setName(cursor.getString(1));
 
+            db.close();
             return category;
         }
         else{
+            db.close();
             return null;
         }
     }
@@ -130,11 +131,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             income.setId(cursor.getInt(0));
             income.setName(cursor.getString(1));
             income.setPrice(cursor.getFloat(2));
-            income.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(3)));
+            income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
+            db.close();
             return income;
         }
         else{
+            db.close();
             return null;
         }
     }
@@ -148,32 +151,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             spending.setId(cursor.getInt(0));
             spending.setName(cursor.getString(1));
-            spending.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(2)));
+            spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
             spending.setPrice(cursor.getFloat(3));
             spending.setCategoryId(cursor.getInt(4));
-            spending.setJarId(cursor.getInt(5));
+            spending.setBudgetId(cursor.getInt(5));
 
+            db.close();
             return spending;
         }
         else{
+            db.close();
             return null;
         }
     }
-    public Jar GetJar(int id){
-        Jar jar = new Jar();
+    public Budget GetBudget(int id){
+        Budget budget = new Budget();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM jar WHERE id = '" + id + "';";
+        String sql = "SELECT * FROM budget WHERE id = '" + id + "';";
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
-            jar.setId(cursor.getInt(0));
-            jar.setName(cursor.getString(1));
-            jar.setPortion(cursor.getFloat(2));
+            budget.setId(cursor.getInt(0));
+            budget.setName(cursor.getString(1));
+            budget.setPortion(cursor.getFloat(2));
 
-            return jar;
+            db.close();
+            return budget;
         }
         else{
+            db.close();
             return null;
         }
     }
@@ -187,23 +194,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Spending spending = new Spending();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM spending WHERE date > '" + new SimpleDateFormat("yyyy-MM-dd").format(date) + "';";
+        String sql = "SELECT * FROM spending WHERE date > '" + DATE_FORMAT.format(date) + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            for (int c = 0; c < cursor.getCount(); c++) {
+                spending.setId(cursor.getInt(0));
+                spending.setName(cursor.getString(1));
+                spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
+                spending.setPrice(cursor.getFloat(3));
+                spending.setCategoryId(cursor.getInt(4));
+                spending.setBudgetId(cursor.getInt(5));
+
+                spendingArrayList.add(spending);
+            }
+            db.close();
+            return spendingArrayList;
+        } else {
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<Income> GetIncomeFromDate(Date date) throws ParseException {
+        ArrayList<Income> incomeArrayList = new ArrayList<Income>();
+        Income income = new Income();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM income WHERE date > '" + DATE_FORMAT.format(date) + "';";
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
             for(int c = 0; c < cursor.getCount(); c++) {
-                spending.setId(cursor.getInt(0));
-                spending.setName(cursor.getString(1));
-                spending.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(2)));
-                spending.setPrice(cursor.getFloat(3));
-                spending.setCategoryId(cursor.getInt(4));
-                spending.setJarId(cursor.getInt(5));
+                income.setId(cursor.getInt(0));
+                income.setName(cursor.getString(1));
+                income.setPrice(cursor.getFloat(3));
+                income.setDate(DATE_FORMAT.parse(cursor.getString(2)));
 
-                spendingArrayList.add(spending);
+                incomeArrayList.add(income);
             }
-            return spendingArrayList;
+            db.close();
+            return incomeArrayList;
         }
         else{
+            db.close();
             return null;
         }
     }
