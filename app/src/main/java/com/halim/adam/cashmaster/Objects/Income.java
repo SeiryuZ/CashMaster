@@ -1,5 +1,7 @@
 package com.halim.adam.cashmaster.Objects;
 
+import com.halim.adam.cashmaster.DatabaseHelper;
+
 import java.util.Date;
 
 /**

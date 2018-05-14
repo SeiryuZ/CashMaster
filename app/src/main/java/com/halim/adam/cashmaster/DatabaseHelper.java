@@ -27,16 +27,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE category ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE );";
+        String sql = "CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE income ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price NUMERIC, date TEXT DEFAULT (date('now')));";
+        sql = "CREATE TABLE income (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price NUMERIC, date TEXT DEFAULT (date('now')));";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE budget ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion INTEGER );";
+        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion INTEGER);";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE spending ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, budgetId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL );";
+        sql = "CREATE TABLE spending (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, budgetId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL);";
         stmt = db.compileStatement(sql);
         stmt.execute();
     }
@@ -95,6 +95,126 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
+    }
+
+    /*
+    SELECT ALL
+     */
+
+    public ArrayList<Category> GetCategoryList(){
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        Category category = new Category();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM category;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++){
+                category.setId(cursor.getInt(0));
+                category.setName(cursor.getString(1));
+
+                categoryList.add(category);
+
+                cursor.moveToNext();
+            }
+
+            db.close();
+            return categoryList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<Income> GetIncomeList() throws ParseException {
+        ArrayList<Income> incomeList = new ArrayList<Income>();
+        Income income = new Income();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM income;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++){
+                income.setId(cursor.getInt(0));
+                income.setName(cursor.getString(1));
+                income.setPrice(cursor.getFloat(2));
+                income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
+
+                incomeList.add(income);
+
+                cursor.moveToNext();
+            }
+
+            db.close();
+            return incomeList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<Spending> GetSpendingList() throws ParseException {
+        ArrayList<Spending> spendingList = new ArrayList<Spending>();
+        Spending spending = new Spending();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM spending;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++) {
+                spending.setId(cursor.getInt(0));
+                spending.setName(cursor.getString(1));
+                spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
+                spending.setPrice(cursor.getFloat(3));
+                spending.setCategoryId(cursor.getInt(4));
+                spending.setBudgetId(cursor.getInt(5));
+
+                spendingList.add(spending);
+
+                cursor.moveToNext();
+            }
+
+            db.close();
+            return spendingList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<Budget> GetBudgetList(){
+        ArrayList<Budget> budgetList = new ArrayList<Budget>();
+        Budget budget = new Budget();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM budget;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++) {
+                budget.setId(cursor.getInt(0));
+                budget.setName(cursor.getString(1));
+                budget.setPortion(cursor.getFloat(2));
+
+                budgetList.add(budget);
+
+                cursor.getCount();
+            }
+
+            db.close();
+            return budgetList;
+        }
+        else{
+            db.close();
+            return null;
+        }
     }
 
     /*
