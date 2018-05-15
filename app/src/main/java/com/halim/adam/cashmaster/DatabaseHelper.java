@@ -31,13 +31,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE income (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price NUMERIC, date TEXT DEFAULT (date('now')));";
+        sql = "CREATE TABLE income (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount NUMERIC, date TEXT DEFAULT (date('now')));";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion INTEGER);";
+        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion NUMERIC, amount NUMERIC);";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE spending (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), price NUMERIC, categoryId INTEGER, budgetId INTEGER, FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL);";
+        sql = "CREATE TABLE spending (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), amount NUMERIC, categoryId INTEGER, budgetId INTEGER, " +
+                "FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL, FOREIGN KEY(budgetId) REFERENCES budget(id) ON DELETE SET NULL);";
         stmt = db.compileStatement(sql);
         stmt.execute();
     }
@@ -76,9 +77,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-    public void InsertBudget(String name, int portion){
+    public void InsertBudget(String name, float portion, float amount){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO budget (name, portion) VALUES ('" + name + "', '" + portion + "');";
+        String sql = "INSERT INTO budget (name, portion, amount) VALUES ('" + name + "', '" + portion + "', '" + amount + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -142,7 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int c = 0; c < cursor.getCount(); c++){
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
-                income.setPrice(cursor.getFloat(2));
+                income.setAmount(cursor.getFloat(2));
                 income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
                 incomeList.add(income);
@@ -172,7 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setId(cursor.getInt(0));
                 spending.setName(cursor.getString(1));
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
-                spending.setPrice(cursor.getFloat(3));
+                spending.setAmount(cursor.getFloat(3));
                 spending.setCategoryId(cursor.getInt(4));
                 spending.setBudgetId(cursor.getInt(5));
 
@@ -203,6 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 budget.setId(cursor.getInt(0));
                 budget.setName(cursor.getString(1));
                 budget.setPortion(cursor.getFloat(2));
+                budget.setAmount(cursor.getFloat(3));
 
                 budgetList.add(budget);
 
@@ -251,7 +253,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             income.setId(cursor.getInt(0));
             income.setName(cursor.getString(1));
-            income.setPrice(cursor.getFloat(2));
+            income.setAmount(cursor.getFloat(2));
             income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
             db.close();
@@ -273,7 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             spending.setId(cursor.getInt(0));
             spending.setName(cursor.getString(1));
             spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
-            spending.setPrice(cursor.getFloat(3));
+            spending.setAmount(cursor.getFloat(3));
             spending.setCategoryId(cursor.getInt(4));
             spending.setBudgetId(cursor.getInt(5));
 
@@ -296,6 +298,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             budget.setId(cursor.getInt(0));
             budget.setName(cursor.getString(1));
             budget.setPortion(cursor.getFloat(2));
+            budget.setAmount(cursor.getFloat(3));
 
             db.close();
             return budget;
@@ -323,7 +326,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setId(cursor.getInt(0));
                 spending.setName(cursor.getString(1));
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
-                spending.setPrice(cursor.getFloat(3));
+                spending.setAmount(cursor.getFloat(3));
                 spending.setCategoryId(cursor.getInt(4));
                 spending.setBudgetId(cursor.getInt(5));
 
@@ -355,7 +358,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setId(cursor.getInt(0));
                 spending.setName(cursor.getString(1));
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
-                spending.setPrice(cursor.getFloat(3));
+                spending.setAmount(cursor.getFloat(3));
                 spending.setCategoryId(cursor.getInt(4));
                 spending.setBudgetId(cursor.getInt(5));
 
@@ -380,7 +383,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int c = 0; c < cursor.getCount(); c++) {
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
-                income.setPrice(cursor.getFloat(2));
+                income.setAmount(cursor.getFloat(2));
                 income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
                 incomeArrayList.add(income);
@@ -411,7 +414,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int c = 0; c < cursor.getCount(); c++) {
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
-                income.setPrice(cursor.getFloat(2));
+                income.setAmount(cursor.getFloat(2));
                 income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
                 incomeArrayList.add(income);

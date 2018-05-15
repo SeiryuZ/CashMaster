@@ -22,38 +22,70 @@ public class Statistics extends Activity {
         setContentView(R.layout.activity_statistics);
         TextView statisticsText = (TextView) findViewById(R.id.statisticsText);
 
-        ArrayList<Spending> spendingLastWeekList = new ArrayList<>();
-        ArrayList<Income> incomeLastWeekList = new ArrayList<>();
-        float spendingLastWeekTotalPrice = 0;
-        float incomeLastWeekTotalPrice = 0;
+        ArrayList<Spending> spendingList = new ArrayList<>();
+        ArrayList<Income> incomeList = new ArrayList<>();
+        float spendingTotalPrice = 0;
+        float incomeTotalPrice = 0;
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
         try {
-            spendingLastWeekList = dbHelper.GetSpendingFromDate(new Date(), 7);
-            incomeLastWeekList = dbHelper.GetIncomeFromDate(new Date(), 7);
+            spendingList = dbHelper.GetSpendingFromDate(new Date(), 7);
+            incomeList = dbHelper.GetIncomeFromDate(new Date(), 7);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        for(int c = 0; c < spendingLastWeekList.size(); c++){
-            spendingLastWeekTotalPrice += spendingLastWeekList.get(c).getPrice();
+        // get last 7 days income & spending
+        if(spendingList != null){
+            for(int c = 0; c < spendingList.size(); c++){
+                spendingTotalPrice += spendingList.get(c).getAmount();
+            }
         }
-        for(int c = 0; c < incomeLastWeekList.size(); c++){
-            incomeLastWeekTotalPrice += incomeLastWeekList.get(c).getPrice();
+        else{
+            spendingTotalPrice = 0;
         }
-        statisticsText.append("Spending for the last 7 days: " + spendingLastWeekTotalPrice + "\n");
-        statisticsText.append("Income for the last 7 days: " + incomeLastWeekTotalPrice + "\n");
+        if(incomeList != null){
+            for(int c = 0; c < incomeList.size(); c++){
+                incomeTotalPrice += incomeList.get(c).getAmount();
+            }
+        }
+        else{
+            incomeTotalPrice = 0;
+        }
+        statisticsText.append("Spending for the last 7 days: " + spendingTotalPrice + "\n");
+        statisticsText.append("Income for the last 7 days: " + incomeTotalPrice + "\n");
 
-        // print all income
+        // get last 30 days of income & spending
+        spendingTotalPrice = 0;
+        incomeTotalPrice = 0;
         try {
-            incomeLastWeekList = dbHelper.GetIncomeList();
+            spendingList = dbHelper.GetSpendingFromDate(new Date(), 30);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        for(int c = 0; c < incomeLastWeekList.size(); c++){
-            statisticsText.append(incomeLastWeekList.get(c).getDate() + "\n");
+        try {
+            incomeList = dbHelper.GetIncomeFromDate(new Date(), 30);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        if(spendingList != null){
+            for(int c = 0; c < spendingList.size(); c++){
+                spendingTotalPrice += spendingList.get(c).getAmount();
+            }
+        }
+        else{
+            spendingTotalPrice = 0;
+        }
+        if(incomeList != null){
+            for(int c = 0; c < incomeList.size(); c++){
+                incomeTotalPrice += incomeList.get(c).getAmount();
+            }
+        }
+        else{
+            incomeTotalPrice = 0;
+        }
+        statisticsText.append("Spending for the last 30 days: " + spendingTotalPrice + "\n");
+        statisticsText.append("Income for the last 30 days: " + incomeTotalPrice + "\n");
     }
 }

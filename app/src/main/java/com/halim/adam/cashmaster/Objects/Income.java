@@ -11,15 +11,15 @@ import java.util.Date;
 public class Income {
     private int id;
     private String name;
-    private float price;
+    private float amount;
     private Date date;
 
     public Income(){}
 
-    public Income(int id, String name, float price, Date date){
+    public Income(int id, String name, float amount, Date date){
         this.id = id;
         this.name = name;
-        this.price = price;
+        this.amount = amount;
         this.date = date;
     }
 
@@ -39,12 +39,12 @@ public class Income {
         this.name = name;
     }
 
-    public float getPrice() {
-        return price;
+    public float getAmount() {
+        return amount;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     public Date getDate() {

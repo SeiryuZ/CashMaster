@@ -19,7 +19,7 @@
         app:layout_constraintTop_toBottomOf="@+id/jarSpinner" />
 
     <EditText
-        android:id="@+id/addName"
+        android:id="@+id/inputName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/addDate"
+        android:id="@+id/inputDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -55,10 +55,10 @@
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addName" />
+        app:layout_constraintTop_toBottomOf="@+id/inputName" />
 
     <EditText
-        android:id="@+id/addAmount"
+        android:id="@+id/inputAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -69,7 +69,7 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDate" />
+        app:layout_constraintTop_toBottomOf="@+id/inputDate" />
 
     <Spinner
         android:id="@+id/jarSpinner"
@@ -80,6 +80,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAmount" />
 
 </android.support.constraint.ConstraintLayout>
