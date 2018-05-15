@@ -14,6 +14,7 @@ import com.halim.adam.cashmaster.Objects.Spending;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -335,6 +336,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
+    public ArrayList<Spending> GetSpendingFromDate(Date date, int daysAgo) throws ParseException {
+        ArrayList<Spending> spendingArrayList = new ArrayList<Spending>();
+        Spending spending = new Spending();
+
+        // get -x days
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -daysAgo);
+        Date dateDaysAgo = cal.getTime();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM spending WHERE date > '" + DATE_FORMAT.format(dateDaysAgo) + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            for (int c = 0; c < cursor.getCount(); c++) {
+                spending.setId(cursor.getInt(0));
+                spending.setName(cursor.getString(1));
+                spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
+                spending.setPrice(cursor.getFloat(3));
+                spending.setCategoryId(cursor.getInt(4));
+                spending.setBudgetId(cursor.getInt(5));
+
+                spendingArrayList.add(spending);
+            }
+            db.close();
+            return spendingArrayList;
+        } else {
+            db.close();
+            return null;
+        }
+    }
     public ArrayList<Income> GetIncomeFromDate(Date date) throws ParseException {
         ArrayList<Income> incomeArrayList = new ArrayList<Income>();
         Income income = new Income();
@@ -347,8 +380,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int c = 0; c < cursor.getCount(); c++) {
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
-                income.setPrice(cursor.getFloat(3));
-                income.setDate(DATE_FORMAT.parse(cursor.getString(2)));
+                income.setPrice(cursor.getFloat(2));
+                income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
+
+                incomeArrayList.add(income);
+            }
+            db.close();
+            return incomeArrayList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<Income> GetIncomeFromDate(Date date, int daysAgo) throws ParseException {
+        ArrayList<Income> incomeArrayList = new ArrayList<Income>();
+        Income income = new Income();
+
+        // get -x days
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -daysAgo);
+        Date dateDaysAgo = cal.getTime();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM income WHERE date > '" + DATE_FORMAT.format(dateDaysAgo) + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            for(int c = 0; c < cursor.getCount(); c++) {
+                income.setId(cursor.getInt(0));
+                income.setName(cursor.getString(1));
+                income.setPrice(cursor.getFloat(2));
+                income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
                 incomeArrayList.add(income);
             }
