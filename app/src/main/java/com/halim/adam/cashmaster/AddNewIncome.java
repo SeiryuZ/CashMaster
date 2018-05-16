@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.halim.adam.cashmaster.Objects.Budget;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AddNewIncome extends Activity {
@@ -34,5 +37,20 @@ public class AddNewIncome extends Activity {
             date = DATE_FORMAT.parse(inputDate.getText().toString());
         }
         dbHelper.InsertIncome(inputName.getText().toString(), Float.valueOf(inputAmount.getText().toString()), date);
+
+        // divide to budgets
+        ArrayList<Budget> budgetList = dbHelper.GetBudgetList();
+
+        // check if budget column empty
+        if(budgetList != null){
+            dbHelper.InsertBudget("Main", 100, 0);
+            budgetList = dbHelper.GetBudgetList();
+        }
+
+        // get total portion
+        float portionTotal = 0;
+        for(int c = 0; c <budgetList.size(); c++){
+            portionTotal += budgetList.get(c).getPortion();
+        }
     }
 }
