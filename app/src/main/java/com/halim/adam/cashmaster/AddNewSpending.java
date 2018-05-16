@@ -47,7 +47,7 @@ public class AddNewSpending extends Activity {
         spinnerBudget.setAdapter(budgetAdapter);
     }
 
-    public void GetInput(){
+    public void GetInput(View view){
 
     }
 

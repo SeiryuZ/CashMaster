@@ -34,11 +34,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sql = "CREATE TABLE income (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount NUMERIC, date TEXT DEFAULT (date('now')));";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, portion NUMERIC, amount NUMERIC);";
-        stmt = db.compileStatement(sql);
-        stmt.execute();
         sql = "CREATE TABLE spending (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), amount NUMERIC, categoryId INTEGER, budgetId INTEGER, " +
                 "FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL, FOREIGN KEY(budgetId) REFERENCES budget(id) ON DELETE SET NULL);";
+        stmt = db.compileStatement(sql);
+        stmt.execute();
+        sql = "CREATE TABLE budget_ratio (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ratio NUMERIC);";
+        stmt = db.compileStatement(sql);
+        stmt.execute();
+        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, ratioId INTEGER, incomeId INTEGER, amount NUMERIC, FOREIGN KEY(ratioId) REFERENCES budget_ratio(id) ON DELETE SET NULL" +
+                ", FOREIGN KEY (incomeId) REFERENCES income(id) ON DELETE CASCADE)";
+        stmt = db.compileStatement(sql);
+        stmt.execute();
+        sql = "CREATE TABLE budget_transfer (id INTEGER PRIMARY KEY AUTOINCREMENT, jarFromId INTEGER, jarToId INTEGER, amount NUMERIC, FOREIGN KEY (jarFromId) REFERENCES budget_jar(id)" +
+                " ON DELETE SET NULL, FOREIGN KEY (jarToId) REFERENCES budget_jar(id) ON DELETE SET NULL)";
         stmt = db.compileStatement(sql);
         stmt.execute();
     }
@@ -52,10 +60,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     INSERT TO TABLES
      */
 
-    /**
-     * Insert to table 'category'
-     * @param name name of the category
-     */
     public void InsertCategory(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "INSERT INTO category (name) VALUES ('" + name + "');";

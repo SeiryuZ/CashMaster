@@ -16,12 +16,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".AddNewSpending" />-->
+        <!-- <activity android:name=".AddNewSpending" /> -->
         <activity android:name=".AddNewIncome" />
         <activity android:name=".AddNewBudget" />
         <activity android:name=".TransactionHistory" />
-        <activity android:name=".Statistics"></activity>
-        <activity android:name=".AddNewCategory"></activity>
+        <activity android:name=".Statistics" />
+        <activity android:name=".AddNewCategory" />
+        <activity android:name=".ViewCategories" />
+        <activity android:name=".ViewBudgets" />
+        <activity android:name=".ViewIncomes" />
+        <activity android:name=".ViewSpendings" />
+        <activity android:name=".TransferBudget" />
+        <activity android:name=".EditSpending" />
+        <activity android:name=".EditCategory" />
+        <activity android:name=".EditBudget"></activity>
     </application>
 
 </manifest>
