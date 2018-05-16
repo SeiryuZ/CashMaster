@@ -1,7 +1,5 @@
 package com.halim.adam.cashmaster.Objects;
 
-import java.util.ArrayList;
-
 public class Budget {
     private int id;
     private String name;

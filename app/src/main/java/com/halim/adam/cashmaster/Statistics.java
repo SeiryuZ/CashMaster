@@ -10,7 +10,6 @@ import com.halim.adam.cashmaster.Objects.Spending;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Statistics extends Activity {
