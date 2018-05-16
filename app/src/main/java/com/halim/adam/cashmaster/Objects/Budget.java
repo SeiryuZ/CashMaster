@@ -1,24 +1,18 @@
 package com.halim.adam.cashmaster.Objects;
 
-import java.util.Date;
-
-/**
- * Created by Adam on 27-Apr-18.
- */
-
-public class Income {
+public class Budget {
     private int id;
     private String name;
+    private float portion;
     private float amount;
-    private Date date;
 
-    public Income(){}
+    public Budget(){}
 
-    public Income(int id, String name, float amount, Date date){
+    public Budget(int id, String name, float portion, float amount){
         this.id = id;
         this.name = name;
+        this.portion = portion;
         this.amount = amount;
-        this.date = date;
     }
 
     public int getId() {
@@ -37,19 +31,19 @@ public class Income {
         this.name = name;
     }
 
+    public float getPortion() {
+        return portion;
+    }
+
+    public void setPortion(float portion) {
+        this.portion = portion;
+    }
+
     public float getAmount() {
         return amount;
     }
 
     public void setAmount(float amount) {
         this.amount = amount;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }
