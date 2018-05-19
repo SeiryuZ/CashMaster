@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.halim.adam.cashmaster.ListAdapters.BudgetListAdapter;
@@ -21,8 +22,9 @@ public class ViewBudgets extends Activity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
+        // get data
         ArrayList<BudgetRatio> budgetRatioList = dbHelper.GetBudgetRatioList();
-        ArrayList<Integer> budgetIdList = new ArrayList<>();
+        final ArrayList<Integer> budgetIdList = new ArrayList<>();
         ArrayList<String> budgetNameList = new ArrayList<>();
         ArrayList<Float> ratioList = new ArrayList<>();
         ArrayList<Float> budgetTotalList = new ArrayList<>();
@@ -41,6 +43,8 @@ public class ViewBudgets extends Activity {
             budgetTotalList.add(budgetTotal);
         }
 
+        final Integer[] budgetIdArray = budgetIdList.toArray(new Integer[budgetIdList.size()]);
+
         //fill ListView
         ListView listView;
 
@@ -48,6 +52,15 @@ public class ViewBudgets extends Activity {
                 budgetNameList.toArray(new String[budgetNameList.size()]), ratioList.toArray(new Float[budgetRatioList.size()]), budgetTotalList.toArray(new Float[budgetTotalList.size()]));
         listView = (ListView) findViewById(R.id.budgetList);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ViewBudgets.this, EditBudget.class);
+                intent.putExtra("id", budgetIdArray[position]);
+                startActivity(intent);
+            }
+        });
     }
 
     public void MoveToTransactionHistoryPage(View view) {

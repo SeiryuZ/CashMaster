@@ -36,7 +36,6 @@ public class BudgetListAdapter extends ArrayAdapter {
         TextView nameTextField = (TextView) rowView.findViewById(R.id.nameText);
         TextView ratioTextField = (TextView) rowView.findViewById(R.id.ratioText);
         TextView amountTextField = (TextView) rowView.findViewById(R.id.amountText);
-        Button editButtonView = (Button) rowView.findViewById(R.id.editButton);
 
         //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray[position]);

@@ -18,7 +18,6 @@ public class TransactionHistory extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history);
-        transactionList = (TextView) findViewById(R.id.transactionList);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
