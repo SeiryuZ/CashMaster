@@ -40,8 +40,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL, FOREIGN KEY(budgetId) REFERENCES budget(id) ON DELETE SET NULL);";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, ratioId INTEGER, incomeId INTEGER, amount NUMERIC, FOREIGN KEY(ratioId) REFERENCES budget_ratio(id) ON DELETE SET NULL" +
-                ", FOREIGN KEY (incomeId) REFERENCES income(id) ON DELETE CASCADE)";
+        sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, ratioId INTEGER, incomeId INTEGER, amount NUMERIC, FOREIGN KEY(ratioId) REFERENCES budget_ratio(id) " +
+                "ON DELETE SET NULL, FOREIGN KEY (incomeId) REFERENCES income(id) ON DELETE CASCADE)";
         stmt = db.compileStatement(sql);
         stmt.execute();
         sql = "CREATE TABLE budget_ratio (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ratio NUMERIC);";
@@ -69,37 +69,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-    public void InsertIncome(String name, float price, Date date){
+    public void InsertIncome(String name, float amount, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO income (name, price, date) VALUES ('" + name + "', '" + price + "', '" + DATE_FORMAT.format(date) +  "');";
+        String sql = "INSERT INTO income (name, amount, date) VALUES ('" + name + "', '" + amount + "', '" + DATE_FORMAT.format(date) +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertIncome(String name, float price){
+    public void InsertIncome(String name, float amount){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO income (name, price) VALUES ('" + name + "', '" + price + "');";
+        String sql = "INSERT INTO income (name, amount) VALUES ('" + name + "', '" + amount + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertBudget(String name, int ratioId, int incomeId, float amount){
+    public void InsertBudget(int ratioId, int incomeId, float amount){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO budget (name, ratioId, incomeId amount) VALUES ('" + name + "', '" + ratioId + "', '" + incomeId + "', '" + amount + "');";
+        String sql = "INSERT INTO budget (ratioId, incomeId, amount) VALUES ('" + ratioId + "', '" + incomeId + "', '" + amount + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertSpending(String name, float price, int categoryId, int budgetId, Date date){
+    public void InsertSpending(String name, float amount, int categoryId, int budgetId, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, date, price, categoryId, budgetId) VALUES ('" + name + "', '" + DATE_FORMAT.format(date) + "', '" + price + "', '" + categoryId + "', '" + budgetId +  "');";
+        String sql = "INSERT INTO spending (name, date, amount, categoryId, budgetId) VALUES ('" + name + "', '" + DATE_FORMAT.format(date) + "', '" + amount + "', '" + categoryId + "', '" + budgetId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertSpending(String name, float price, int categoryId, int budgetId){
+    public void InsertSpending(String name, float amount, int categoryId, int budgetId){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, price, categoryId, budgetId) VALUES ('" + name + "', '" + price + "', '" + categoryId + "', '" + budgetId +  "');";
+        String sql = "INSERT INTO spending (name, amount, categoryId, budgetId) VALUES ('" + name + "', '" + amount + "', '" + categoryId + "', '" + budgetId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -567,6 +567,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             db.close();
             return incomeArrayList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+
+    public Income GetLatestIncome() throws ParseException {
+        Income income = new Income();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM income ORDER BY id DESC LIMIT 1;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            income.setId(cursor.getInt(0));
+            income.setName(cursor.getString(1));
+            income.setAmount(cursor.getFloat(2));
+            income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
+
+            db.close();
+            return income;
         }
         else{
             db.close();

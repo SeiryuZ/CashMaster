@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.halim.adam.cashmaster.Objects.BudgetRatio;
+import com.halim.adam.cashmaster.Objects.Income;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,10 +23,7 @@ public class AddNewIncome extends Activity {
         setContentView(R.layout.activity_add_new_income);
     }
 
-    public void MoveToTransactionHistoryPage(View view) throws ParseException {
-        Intent intent = new Intent(this, TransactionHistory.class);
-        startActivity(intent);
-
+    public void GetInput(View view) throws ParseException {
         EditText inputName = findViewById(R.id.inputName);
         EditText inputAmount = findViewById(R.id.inputAmount);
         EditText inputDate = findViewById(R.id.inputDate);
@@ -39,13 +37,32 @@ public class AddNewIncome extends Activity {
             dbHelper.InsertIncome(inputName.getText().toString(), Float.valueOf(inputAmount.getText().toString()));
         }
 
-        // divide to budgets
         ArrayList<BudgetRatio> budgetRatioList = dbHelper.GetBudgetRatioList();
+
+        if(budgetRatioList == null){
+            dbHelper.InsertBudgetRatio("Main", 100);
+            budgetRatioList = dbHelper.GetBudgetRatioList();
+        }
 
         // get total ratio
         float ratioTotal = 0;
-        for(int c = 0; c <budgetRatioList.size(); c++){
+        for(int c = 0; c < budgetRatioList.size(); c++){
             ratioTotal += budgetRatioList.get(c).getRatio();
         }
+
+        // divide to budgets
+        Income latestIncome = dbHelper.GetLatestIncome();
+        for(int c = 0; c < budgetRatioList.size(); c++){
+            dbHelper.InsertBudget(budgetRatioList.get(c).getId(), latestIncome.getId(), latestIncome.getAmount()*budgetRatioList.get(c).getRatio());
+        }
+
+        // move to ViewIncome
+        Intent intent = new Intent(this, ViewIncomes.class);
+        startActivity(intent);
+    }
+
+    public void MoveToTransactionHistoryPage(View view) {
+        Intent intent = new Intent(this, TransactionHistory.class);
+        startActivity(intent);
     }
 }

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewBudgetRatios">
+        <activity android:name=".AddNewIncome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddNewSpending" />
-        <activity android:name=".AddNewIncome" />
-         <activity android:name=".AddNewBudgetRatio" />
+        <!--<activity android:name=".AddNewIncome" />-->
+        <activity android:name=".AddNewBudgetRatio" />
         <activity android:name=".TransactionHistory" />
         <activity android:name=".Statistics" />
         <activity android:name=".AddNewCategory" />
@@ -30,7 +30,7 @@
         <activity android:name=".EditSpending" />
         <activity android:name=".EditCategory" />
         <activity android:name=".EditBudget" />
-        <!--<activity android:name=".ViewBudgetRatios"></activity>-->
+        <activity android:name=".ViewBudgetRatios" />
     </application>
 
 </manifest>
