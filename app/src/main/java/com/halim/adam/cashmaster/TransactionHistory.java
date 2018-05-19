@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.halim.adam.cashmaster.Objects.Spending;
@@ -28,6 +29,8 @@ public class TransactionHistory extends Activity {
             e.printStackTrace();
         }
         transactionList.append(spending.getName());
+
+
     }
 
     public void MoveToNewSpendingActivity(View view){

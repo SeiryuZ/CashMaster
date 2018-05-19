@@ -124,8 +124,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
 
     public ArrayList<Category> GetCategoryList(){
-        ArrayList<Category> categoryList = new ArrayList<Category>();
-        Category category = new Category();
+        ArrayList<Category> categoryList = new ArrayList<>();
+        Category category;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM category;";
@@ -134,6 +134,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++){
+                category = new Category();
+
                 category.setId(cursor.getInt(0));
                 category.setName(cursor.getString(1));
 
@@ -152,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Income> GetIncomeList() throws ParseException {
         ArrayList<Income> incomeList = new ArrayList<Income>();
-        Income income = new Income();
+        Income income;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM income;";
@@ -161,6 +163,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++){
+                income = new Income();
+
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
                 income.setAmount(cursor.getFloat(2));
@@ -181,7 +185,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Spending> GetSpendingList() throws ParseException {
         ArrayList<Spending> spendingList = new ArrayList<Spending>();
-        Spending spending = new Spending();
+        Spending spending;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM spending;";
@@ -190,6 +194,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++) {
+                spending = new Spending();
+
                 spending.setId(cursor.getInt(0));
                 spending.setName(cursor.getString(1));
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
@@ -212,7 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Budget> GetBudgetList(){
         ArrayList<Budget> budgetList = new ArrayList<Budget>();
-        Budget budget = new Budget();
+        Budget budget;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM budget;";
@@ -221,6 +227,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++) {
+                budget = new Budget();
+
                 budget.setId(cursor.getInt(0));
                 budget.setRatioId(cursor.getInt(1));
                 budget.setIncomeId(cursor.getInt(2));
@@ -241,7 +249,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<BudgetRatio> GetBudgetRatioList(){
         ArrayList<BudgetRatio> budgetRatioList = new ArrayList<BudgetRatio>();
-        BudgetRatio budgetRatio = new BudgetRatio();
+        BudgetRatio budgetRatio;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM budgetRatio;";
@@ -250,6 +258,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++) {
+                budgetRatio = new BudgetRatio();
+
                 budgetRatio.setId(cursor.getInt(0));
                 budgetRatio.setName(cursor.getString(1));
                 budgetRatio.setRatio(cursor.getFloat(2));
@@ -269,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<BudgetTransfer> GetBudgetTransferList(){
         ArrayList<BudgetTransfer> budgetList = new ArrayList<BudgetTransfer>();
-        BudgetTransfer budget = new BudgetTransfer();
+        BudgetTransfer budget;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM budgetTransfer;";
@@ -278,6 +288,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++) {
+                budget = new BudgetTransfer();
+
                 budget.setId(cursor.getInt(0));
                 budget.setJarFromId(cursor.getInt(1));
                 budget.setJarToId(cursor.getInt(2));
@@ -433,7 +445,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Spending> GetSpendingFromDate(Date date) throws ParseException {
         ArrayList<Spending> spendingArrayList = new ArrayList<Spending>();
-        Spending spending = new Spending();
+        Spending spending;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM spending WHERE date > '" + DATE_FORMAT.format(date) + "';";
@@ -441,6 +453,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             for (int c = 0; c < cursor.getCount(); c++) {
+                spending = new Spending();
+
                 spending.setId(cursor.getInt(0));
                 spending.setName(cursor.getString(1));
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
@@ -459,7 +473,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Spending> GetSpendingFromDate(Date date, int daysAgo) throws ParseException {
         ArrayList<Spending> spendingArrayList = new ArrayList<Spending>();
-        Spending spending = new Spending();
+        Spending spending;
 
         // get -x days
         Calendar cal = Calendar.getInstance();
@@ -473,6 +487,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             for (int c = 0; c < cursor.getCount(); c++) {
+                spending = new Spending();
+
                 spending.setId(cursor.getInt(0));
                 spending.setName(cursor.getString(1));
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
@@ -490,8 +506,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     public ArrayList<Income> GetIncomeFromDate(Date date) throws ParseException {
-        ArrayList<Income> incomeArrayList = new ArrayList<Income>();
-        Income income = new Income();
+        ArrayList<Income> incomeArrayList = new ArrayList<>();
+        Income income;
 
         SQLiteDatabase db = this.getReadableDatabase();
         String sql = "SELECT * FROM income WHERE date > '" + DATE_FORMAT.format(date) + "';";
@@ -499,6 +515,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             for(int c = 0; c < cursor.getCount(); c++) {
+                income = new Income();
+
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
                 income.setAmount(cursor.getFloat(2));
@@ -516,7 +534,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Income> GetIncomeFromDate(Date date, int daysAgo) throws ParseException {
         ArrayList<Income> incomeArrayList = new ArrayList<Income>();
-        Income income = new Income();
+        Income income;
 
         // get -x days
         Calendar cal = Calendar.getInstance();
@@ -530,6 +548,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             for(int c = 0; c < cursor.getCount(); c++) {
+                income = new Income();
+
                 income.setId(cursor.getInt(0));
                 income.setName(cursor.getString(1));
                 income.setAmount(cursor.getFloat(2));

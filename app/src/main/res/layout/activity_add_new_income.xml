@@ -40,7 +40,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Date of income [yyyy-MM-dd]"
+        android:hint="@string/date_of_income_yyyy_mm_dd"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
