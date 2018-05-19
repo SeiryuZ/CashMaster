@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">CashMaster</string>
+    <string name="app_name">Cash Master</string>
     <string name="name">Name</string>
     <string name="date">Date</string>
     <string name="amount_of_spending">Amount of spending</string>

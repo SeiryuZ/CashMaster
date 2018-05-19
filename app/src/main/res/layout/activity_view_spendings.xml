@@ -6,4 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".ViewSpendings">
 
+    <Button
+        android:id="@+id/categories3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToViewCategoryActivity"
+        android:text="Categories"
+        app:layout_constraintEnd_toStartOf="@+id/button16"
+        app:layout_constraintStart_toEndOf="@+id/button18"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToViewBudgetActivity"
+        android:text="Budgets"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToStatisticsPage"
+        android:text="Statistics"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToViewIncomeActivity"
+        android:text="Incomes"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToTransactionHistoryPage"
+        android:text="Transaction History"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

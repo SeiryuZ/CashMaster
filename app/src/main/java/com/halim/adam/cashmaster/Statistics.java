@@ -1,7 +1,10 @@
 package com.halim.adam.cashmaster;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.halim.adam.cashmaster.Objects.Income;
@@ -86,5 +89,11 @@ public class Statistics extends Activity {
         }
         statisticsText.append("Spending for the last 30 days: " + spendingTotalPrice + "\n");
         statisticsText.append("Income for the last 30 days: " + incomeTotalPrice + "\n");
+    }
+
+    public void MoveToTransactionHistoryPage(View view) {
+        Intent intent = new Intent(this, TransactionHistory.class);
+        startActivity(intent);
+        finish();
     }
 }

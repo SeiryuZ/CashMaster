@@ -1,7 +1,9 @@
 package com.halim.adam.cashmaster;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.halim.adam.cashmaster.Objects.Category;
@@ -24,5 +26,11 @@ public class ViewCategories extends Activity {
         for(int c = 0; c < categoryList.size(); c++){
             categoriesText.append(categoryList.get(c).getId() + ": " + categoryList.get(c).getName() + "\n");
         }
+    }
+
+    public void MoveToTransactionHistoryPage(View view) {
+        Intent intent = new Intent(this, TransactionHistory.class);
+        startActivity(intent);
+        finish();
     }
 }

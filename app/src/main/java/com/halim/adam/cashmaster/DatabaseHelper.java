@@ -13,6 +13,7 @@ import com.halim.adam.cashmaster.Objects.Income;
 import com.halim.adam.cashmaster.Objects.Budget;
 import com.halim.adam.cashmaster.Objects.Spending;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sql = "CREATE TABLE income (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount NUMERIC, date TEXT DEFAULT (date('now')));";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE spending (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), amount NUMERIC, categoryId INTEGER, budgetId INTEGER, " +
-                "FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL, FOREIGN KEY(budgetId) REFERENCES budget(id) ON DELETE SET NULL);";
+        sql = "CREATE TABLE spending (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, date TEXT DEFAULT (date('now')), amount NUMERIC, categoryId INTEGER, ratioId INTEGER, " +
+                "FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL, FOREIGN KEY(ratioId) REFERENCES budget_ratio(id) ON DELETE SET NULL);";
         stmt = db.compileStatement(sql);
         stmt.execute();
         sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, ratioId INTEGER, incomeId INTEGER, amount NUMERIC, FOREIGN KEY(ratioId) REFERENCES budget_ratio(id) " +
@@ -47,8 +48,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sql = "CREATE TABLE budget_ratio (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ratio NUMERIC);";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE budget_transfer (id INTEGER PRIMARY KEY AUTOINCREMENT, jarFromId INTEGER, jarToId INTEGER, amount NUMERIC, FOREIGN KEY (jarFromId) REFERENCES budget_jar(id)" +
-                " ON DELETE SET NULL, FOREIGN KEY (jarToId) REFERENCES budget_jar(id) ON DELETE SET NULL)";
+        sql = "CREATE TABLE budget_transfer (id INTEGER PRIMARY KEY AUTOINCREMENT, jarFromId INTEGER, jarToId INTEGER, amount NUMERIC, FOREIGN KEY (jarFromId) REFERENCES budget(id)" +
+                " ON DELETE SET NULL, FOREIGN KEY (jarToId) REFERENCES budget(id) ON DELETE SET NULL)";
         stmt = db.compileStatement(sql);
         stmt.execute();
     }
@@ -201,7 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
                 spending.setAmount(cursor.getFloat(3));
                 spending.setCategoryId(cursor.getInt(4));
-                spending.setBudgetId(cursor.getInt(5));
+                spending.setRatioId(cursor.getInt(5));
 
                 spendingList.add(spending);
 
@@ -366,7 +367,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
             spending.setAmount(cursor.getFloat(3));
             spending.setCategoryId(cursor.getInt(4));
-            spending.setBudgetId(cursor.getInt(5));
+            spending.setRatioId(cursor.getInt(5));
 
             db.close();
             return spending;
@@ -440,6 +441,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*
+    SELECT BUDGET USING RATIO_ID
+     */
+
+    public ArrayList<Budget> GetBudgetFromRatio(int ratioId){
+        ArrayList<Budget> budgetList = new ArrayList<Budget>();
+        Budget budget;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM budget WHERE ratioId = '" + ratioId + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++) {
+                budget = new Budget();
+
+                budget.setId(cursor.getInt(0));
+                budget.setRatioId(cursor.getInt(1));
+                budget.setIncomeId(cursor.getInt(2));
+                budget.setAmount(cursor.getFloat(3));
+
+                budgetList.add(budget);
+
+                cursor.moveToNext();
+            }
+
+            db.close();
+            return budgetList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+
+    /*
     SELECT FROM A DATE
      */
 
@@ -460,7 +497,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
                 spending.setAmount(cursor.getFloat(3));
                 spending.setCategoryId(cursor.getInt(4));
-                spending.setBudgetId(cursor.getInt(5));
+                spending.setRatioId(cursor.getInt(5));
 
                 spendingArrayList.add(spending);
 
@@ -496,7 +533,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
                 spending.setAmount(cursor.getFloat(3));
                 spending.setCategoryId(cursor.getInt(4));
-                spending.setBudgetId(cursor.getInt(5));
+                spending.setRatioId(cursor.getInt(5));
 
                 spendingArrayList.add(spending);
 

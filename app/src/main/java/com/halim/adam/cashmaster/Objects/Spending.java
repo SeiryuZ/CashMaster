@@ -12,17 +12,17 @@ public class Spending {
     private Date date;
     private float amount;
     private int categoryId;
-    private int budgetId;
+    private int ratioId;
 
     public Spending(){}
 
-    public Spending(int id, String name, Date date, float amount, int categoryId, int budgetId) {
+    public Spending(int id, String name, Date date, float amount, int categoryId, int ratioId) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.amount = amount;
         this.categoryId = categoryId;
-        this.budgetId = budgetId;
+        this.ratioId = ratioId;
     }
 
     public int getId() {
@@ -65,11 +65,11 @@ public class Spending {
         this.categoryId = categoryId;
     }
 
-    public int getBudgetId() {
-        return budgetId;
+    public int getRatioId() {
+        return ratioId;
     }
 
-    public void setBudgetId(int budgetId) {
-        this.budgetId = budgetId;
+    public void setRatioId(int ratioId) {
+        this.ratioId = ratioId;
     }
 }

@@ -53,7 +53,7 @@ public class AddNewIncome extends Activity {
         // divide to budgets
         Income latestIncome = dbHelper.GetLatestIncome();
         for(int c = 0; c < budgetRatioList.size(); c++){
-            dbHelper.InsertBudget(budgetRatioList.get(c).getId(), latestIncome.getId(), latestIncome.getAmount()*budgetRatioList.get(c).getRatio());
+            dbHelper.InsertBudget(budgetRatioList.get(c).getId(), latestIncome.getId(), latestIncome.getAmount() * budgetRatioList.get(c).getRatio());
         }
 
         // move to ViewIncome

@@ -8,43 +8,61 @@
     tools:layout_editor_absoluteY="81dp">
 
     <Button
-        android:id="@+id/buttonNewSpending"
-        android:layout_width="wrap_content"
+        android:id="@+id/button3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:onClick="MoveToNewSpendingActivity"
-        android:text="@string/new_spending"
+        android:onClick="MoveToStatisticsPage"
+        android:text="Statistics"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonNewIncome"
-        android:layout_width="wrap_content"
+        android:id="@+id/button5"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="MoveToNewIncomePage"
-        android:text="@string/new_income"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:onClick="MoveToViewSpendingActivity"
+        android:text="Spendings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/transactionScrollView"
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToViewIncomeActivity"
+        android:text="Incomes"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Categories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToViewCategoryActivity"
+        android:text="Categories"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="MoveToViewBudgetActivity"
+        android:text="Budgets"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/transactionList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:scrollbarStyle="insideOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/buttonNewSpending"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/transactionList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
 </android.support.constraint.ConstraintLayout>
