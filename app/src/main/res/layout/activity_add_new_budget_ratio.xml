@@ -30,7 +30,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Income ratio for budget"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputName" />
@@ -42,7 +42,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:onClick="GetInput"
-        android:text="Button"
+        android:text="Add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPortion" />
 

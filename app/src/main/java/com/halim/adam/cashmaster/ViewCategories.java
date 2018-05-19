@@ -2,7 +2,6 @@ package com.halim.adam.cashmaster;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.halim.adam.cashmaster.Objects.Category;

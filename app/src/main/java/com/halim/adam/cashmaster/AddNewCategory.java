@@ -19,6 +19,5 @@ public class AddNewCategory extends Activity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         dbHelper.InsertCategory(addCategory.getText().toString());
-        Log.v("EditText", addCategory.getText().toString());
     }
 }

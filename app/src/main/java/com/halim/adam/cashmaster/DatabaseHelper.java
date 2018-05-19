@@ -106,14 +106,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void InsertBudgetRatio(String name, float ratio){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO budget (name, ratio) VALUES ('" + name + "', '" + ratio + "');";
+        String sql = "INSERT INTO budget_ratio (name, ratio) VALUES ('" + name + "', '" + ratio + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
     public void InsertBudgetTransfer(String name, int jarFromId, int jarToId, float amount){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO budget (name, jarFromId, jarToId, amount) VALUES ('" + name + "', '" + jarFromId + "', '" + jarToId + "', '" + amount + "');";
+        String sql = "INSERT INTO budget_transfer (name, jarFromId, jarToId, amount) VALUES ('" + name + "', '" + jarFromId + "', '" + jarToId + "', '" + amount + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -236,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 budgetList.add(budget);
 
-                cursor.getCount();
+                cursor.moveToNext();
             }
 
             db.close();
@@ -248,11 +248,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     public ArrayList<BudgetRatio> GetBudgetRatioList(){
-        ArrayList<BudgetRatio> budgetRatioList = new ArrayList<BudgetRatio>();
+        ArrayList<BudgetRatio> budgetRatioList = new ArrayList<>();
         BudgetRatio budgetRatio;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM budgetRatio;";
+        String sql = "SELECT * FROM budget_ratio;";
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
@@ -266,7 +266,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 budgetRatioList.add(budgetRatio);
 
-                cursor.getCount();
+                cursor.moveToNext();
             }
 
             db.close();
@@ -278,30 +278,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     public ArrayList<BudgetTransfer> GetBudgetTransferList(){
-        ArrayList<BudgetTransfer> budgetList = new ArrayList<BudgetTransfer>();
-        BudgetTransfer budget;
+        ArrayList<BudgetTransfer> budgetTransferList = new ArrayList<BudgetTransfer>();
+        BudgetTransfer budgetTransfer;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM budgetTransfer;";
+        String sql = "SELECT * FROM budget_transfer;";
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
 
             for(int c = 0; c < cursor.getCount(); c++) {
-                budget = new BudgetTransfer();
+                budgetTransfer = new BudgetTransfer();
 
-                budget.setId(cursor.getInt(0));
-                budget.setJarFromId(cursor.getInt(1));
-                budget.setJarToId(cursor.getInt(2));
-                budget.setAmount(cursor.getFloat(3));
+                budgetTransfer.setId(cursor.getInt(0));
+                budgetTransfer.setJarFromId(cursor.getInt(1));
+                budgetTransfer.setJarToId(cursor.getInt(2));
+                budgetTransfer.setAmount(cursor.getFloat(3));
 
-                budgetList.add(budget);
+                budgetTransferList.add(budgetTransfer);
 
-                cursor.getCount();
+                cursor.moveToNext();
             }
 
             db.close();
-            return budgetList;
+            return budgetTransferList;
         }
         else{
             db.close();
@@ -401,7 +401,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         BudgetRatio budgetRatio = new BudgetRatio();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM budgetRatio WHERE id = '" + id + "';";
+        String sql = "SELECT * FROM budget_ratio WHERE id = '" + id + "';";
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
@@ -421,7 +421,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         BudgetTransfer budgetTransfer = new BudgetTransfer();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM budgetRatio WHERE id = '" + id + "';";
+        String sql = "SELECT * FROM budget_ratio WHERE id = '" + id + "';";
         Cursor cursor = db.rawQuery(sql, null);
 
         if(cursor.moveToFirst()){
@@ -463,6 +463,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setBudgetId(cursor.getInt(5));
 
                 spendingArrayList.add(spending);
+
+                cursor.moveToNext();
             }
             db.close();
             return spendingArrayList;
@@ -497,6 +499,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 spending.setBudgetId(cursor.getInt(5));
 
                 spendingArrayList.add(spending);
+
+                cursor.moveToNext();
             }
             db.close();
             return spendingArrayList;
@@ -523,6 +527,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
                 incomeArrayList.add(income);
+
+                cursor.moveToNext();
             }
             db.close();
             return incomeArrayList;
@@ -556,6 +562,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 income.setDate(DATE_FORMAT.parse(cursor.getString(3)));
 
                 incomeArrayList.add(income);
+
+                cursor.moveToNext();
             }
             db.close();
             return incomeArrayList;

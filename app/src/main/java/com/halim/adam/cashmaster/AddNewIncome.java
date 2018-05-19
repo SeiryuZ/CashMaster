@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.halim.adam.cashmaster.Objects.Budget;
 import com.halim.adam.cashmaster.Objects.BudgetRatio;
 
 import java.text.ParseException;
