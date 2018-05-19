@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import com.halim.adam.cashmaster.Objects.BudgetRatio;
+import com.halim.adam.cashmaster.Objects.BudgetTransfer;
 import com.halim.adam.cashmaster.Objects.Category;
 import com.halim.adam.cashmaster.Objects.Income;
 import com.halim.adam.cashmaster.Objects.Budget;
@@ -38,11 +40,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(categoryId) REFERENCES category(id) ON DELETE SET NULL, FOREIGN KEY(budgetId) REFERENCES budget(id) ON DELETE SET NULL);";
         stmt = db.compileStatement(sql);
         stmt.execute();
-        sql = "CREATE TABLE budget_ratio (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ratio NUMERIC);";
-        stmt = db.compileStatement(sql);
-        stmt.execute();
         sql = "CREATE TABLE budget (id INTEGER PRIMARY KEY AUTOINCREMENT, ratioId INTEGER, incomeId INTEGER, amount NUMERIC, FOREIGN KEY(ratioId) REFERENCES budget_ratio(id) ON DELETE SET NULL" +
                 ", FOREIGN KEY (incomeId) REFERENCES income(id) ON DELETE CASCADE)";
+        stmt = db.compileStatement(sql);
+        stmt.execute();
+        sql = "CREATE TABLE budget_ratio (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ratio NUMERIC);";
         stmt = db.compileStatement(sql);
         stmt.execute();
         sql = "CREATE TABLE budget_transfer (id INTEGER PRIMARY KEY AUTOINCREMENT, jarFromId INTEGER, jarToId INTEGER, amount NUMERIC, FOREIGN KEY (jarFromId) REFERENCES budget_jar(id)" +
@@ -81,9 +83,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-    public void InsertBudget(String name, float portion, float amount){
+    public void InsertBudget(String name, int ratioId, int incomeId, float amount){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO budget (name, portion, amount) VALUES ('" + name + "', '" + portion + "', '" + amount + "');";
+        String sql = "INSERT INTO budget (name, ratioId, incomeId amount) VALUES ('" + name + "', '" + ratioId + "', '" + incomeId + "', '" + amount + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -98,6 +100,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void InsertSpending(String name, float price, int categoryId, int budgetId){
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "INSERT INTO spending (name, price, categoryId, budgetId) VALUES ('" + name + "', '" + price + "', '" + categoryId + "', '" + budgetId +  "');";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.executeInsert();
+        db.close();
+    }
+    public void InsertBudgetRatio(String name, float ratio){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT INTO budget (name, ratio) VALUES ('" + name + "', '" + ratio + "');";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.executeInsert();
+        db.close();
+    }
+    public void InsertBudgetTransfer(String name, int jarFromId, int jarToId, float amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "INSERT INTO budget (name, jarFromId, jarToId, amount) VALUES ('" + name + "', '" + jarFromId + "', '" + jarToId + "', '" + amount + "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -206,8 +222,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             for(int c = 0; c < cursor.getCount(); c++) {
                 budget.setId(cursor.getInt(0));
-                budget.setName(cursor.getString(1));
-                budget.setPortion(cursor.getFloat(2));
+                budget.setRatioId(cursor.getInt(1));
+                budget.setIncomeId(cursor.getInt(2));
+                budget.setAmount(cursor.getFloat(3));
+
+                budgetList.add(budget);
+
+                cursor.getCount();
+            }
+
+            db.close();
+            return budgetList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<BudgetRatio> GetBudgetRatioList(){
+        ArrayList<BudgetRatio> budgetRatioList = new ArrayList<BudgetRatio>();
+        BudgetRatio budgetRatio = new BudgetRatio();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM budgetRatio;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++) {
+                budgetRatio.setId(cursor.getInt(0));
+                budgetRatio.setName(cursor.getString(1));
+                budgetRatio.setRatio(cursor.getFloat(2));
+
+                budgetRatioList.add(budgetRatio);
+
+                cursor.getCount();
+            }
+
+            db.close();
+            return budgetRatioList;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public ArrayList<BudgetTransfer> GetBudgetTransferList(){
+        ArrayList<BudgetTransfer> budgetList = new ArrayList<BudgetTransfer>();
+        BudgetTransfer budget = new BudgetTransfer();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM budgetTransfer;";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+
+            for(int c = 0; c < cursor.getCount(); c++) {
+                budget.setId(cursor.getInt(0));
+                budget.setJarFromId(cursor.getInt(1));
+                budget.setJarToId(cursor.getInt(2));
                 budget.setAmount(cursor.getFloat(3));
 
                 budgetList.add(budget);
@@ -300,12 +373,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             budget.setId(cursor.getInt(0));
-            budget.setName(cursor.getString(1));
-            budget.setPortion(cursor.getFloat(2));
+            budget.setRatioId(cursor.getInt(1));
+            budget.setIncomeId(cursor.getInt(2));
             budget.setAmount(cursor.getFloat(3));
 
             db.close();
             return budget;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public BudgetRatio GetBudgetRatio(int id){
+        BudgetRatio budgetRatio = new BudgetRatio();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM budgetRatio WHERE id = '" + id + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            budgetRatio.setId(cursor.getInt(0));
+            budgetRatio.setName(cursor.getString(1));
+            budgetRatio.setRatio(cursor.getFloat(2));
+
+            db.close();
+            return budgetRatio;
+        }
+        else{
+            db.close();
+            return null;
+        }
+    }
+    public BudgetTransfer GetBudgetTransfer(int id){
+        BudgetTransfer budgetTransfer = new BudgetTransfer();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM budgetRatio WHERE id = '" + id + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            budgetTransfer.setId(cursor.getInt(0));
+            budgetTransfer.setJarFromId(cursor.getInt(1));
+            budgetTransfer.setJarToId(cursor.getInt(2));
+            budgetTransfer.setAmount(cursor.getFloat(3));
+
+            db.close();
+            return budgetTransfer;
         }
         else{
             db.close();

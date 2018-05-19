@@ -17,14 +17,8 @@ public class AddNewBudget extends Activity {
     public void GetInput(View view){
         EditText inputName = findViewById(R.id.inputName);
         EditText inputPortion = findViewById(R.id.inputPortion);
-        EditText inputAmount = findViewById(R.id.inputAmount);
-
-        // check empty
-        if(TextUtils.isEmpty(inputAmount.getText())){
-            inputAmount.setText("0");
-        }
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.InsertBudget(inputName.getText().toString(), Float.valueOf(inputPortion.getText().toString()), Float.valueOf(inputAmount.getText().toString()));
+        dbHelper.InsertBudgetRatio(inputName.getText().toString(), Float.valueOf(inputPortion.getText().toString()));
     }
 }

@@ -2,16 +2,16 @@ package com.halim.adam.cashmaster.Objects;
 
 public class Budget {
     private int id;
-    private String name;
-    private float portion;
+    private int ratioId;
+    private int incomeId;
     private float amount;
 
     public Budget(){}
 
-    public Budget(int id, String name, float portion, float amount){
+    public Budget(int id, int ratioId, int incomeId, float amount) {
         this.id = id;
-        this.name = name;
-        this.portion = portion;
+        this.ratioId = ratioId;
+        this.incomeId = incomeId;
         this.amount = amount;
     }
 
@@ -23,20 +23,20 @@ public class Budget {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getRatioId() {
+        return ratioId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRatioId(int ratioId) {
+        this.ratioId = ratioId;
     }
 
-    public float getPortion() {
-        return portion;
+    public int getIncomeId() {
+        return incomeId;
     }
 
-    public void setPortion(float portion) {
-        this.portion = portion;
+    public void setIncomeId(int incomeId) {
+        this.incomeId = incomeId;
     }
 
     public float getAmount() {
