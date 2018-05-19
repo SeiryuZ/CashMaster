@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.halim.adam.cashmaster.Objects.Budget;
+import com.halim.adam.cashmaster.Objects.BudgetRatio;
 import com.halim.adam.cashmaster.Objects.Category;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class AddNewSpending extends Activity {
 
         // get data for spinner
         ArrayList<Category> categoryList = dbHelper.GetCategoryList();
-        ArrayList<Budget> budgetList = dbHelper.GetBudgetList();
+        ArrayList<BudgetRatio> budgetRatioList = dbHelper.GetBudgetRatioList();
 
         // insert data to string arraylist
         ArrayList<String> categoryStrings = new ArrayList<>();
@@ -34,8 +35,8 @@ public class AddNewSpending extends Activity {
         for(int c = 0; c < categoryList.size(); c++){
             categoryStrings.add(categoryList.get(c).getName());
         }
-        for(int c = 0; c < budgetList.size(); c++){
-            budgetStrings.add(budgetList.get(c).getName());
+        for(int c = 0; c < budgetRatioList.size(); c++){
+            budgetStrings.add(budgetRatioList.get(c).getName());
         }
 
         ArrayAdapter categoryAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryStrings);

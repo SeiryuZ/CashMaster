@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.halim.adam.cashmaster.Objects.Budget;
+import com.halim.adam.cashmaster.Objects.BudgetRatio;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,18 +41,12 @@ public class AddNewIncome extends Activity {
         }
 
         // divide to budgets
-        ArrayList<Budget> budgetList = dbHelper.GetBudgetList();
+        ArrayList<BudgetRatio> budgetRatioList = dbHelper.GetBudgetRatioList();
 
-        // check if budget column empty
-        if(budgetList != null){
-            dbHelper.InsertBudget("Main", 100, 0);
-            budgetList = dbHelper.GetBudgetList();
-        }
-
-        // get total portion
-        float portionTotal = 0;
-        for(int c = 0; c <budgetList.size(); c++){
-            portionTotal += budgetList.get(c).getPortion();
+        // get total ratio
+        float ratioTotal = 0;
+        for(int c = 0; c <budgetRatioList.size(); c++){
+            ratioTotal += budgetRatioList.get(c).getRatio();
         }
     }
 }

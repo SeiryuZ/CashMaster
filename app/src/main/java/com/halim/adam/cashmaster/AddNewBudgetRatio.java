@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddNewBudget extends Activity {
+public class AddNewBudgetRatio extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_budget);
+        setContentView(R.layout.activity_add_new_budget_ratio);
     }
 
     public void GetInput(View view){
