@@ -1,6 +1,7 @@
 package com.halim.adam.cashmaster;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,5 +21,15 @@ public class AddNewBudgetRatio extends Activity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         dbHelper.InsertBudgetRatio(inputName.getText().toString(), Float.valueOf(inputPortion.getText().toString()));
+
+        Intent intent = new Intent(this, ViewBudgets.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewBudgetActivity(View view){
+        Intent intent = new Intent(this, ViewBudgets.class);
+        startActivity(intent);
+        finish();
     }
 }

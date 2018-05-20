@@ -1,6 +1,7 @@
 package com.halim.adam.cashmaster;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,5 +20,15 @@ public class AddNewCategory extends Activity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         dbHelper.InsertCategory(addCategory.getText().toString());
+
+        Intent intent = new Intent(this, ViewCategories.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewCategoryActivity(View view){
+        Intent intent = new Intent(this, ViewCategories.class);
+        startActivity(intent);
+        finish();
     }
 }
