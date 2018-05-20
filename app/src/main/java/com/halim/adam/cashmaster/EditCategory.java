@@ -11,7 +11,7 @@ public class EditCategory extends Activity {
         setContentView(R.layout.activity_edit_category);
 
         // get extra
-        int selectedId = Integer.parseInt(getIntent().getStringExtra("id"));
+        int selectedId = getIntent().getIntExtra("id", 0);
 
 
     }

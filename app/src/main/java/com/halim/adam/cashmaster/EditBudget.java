@@ -1,7 +1,9 @@
 package com.halim.adam.cashmaster;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.halim.adam.cashmaster.Objects.BudgetRatio;
@@ -24,6 +26,12 @@ public class EditBudget extends Activity {
         BudgetRatio selectedBudgetRatio = dbHelper.GetBudgetRatio(selectedId);
 
         nameText.append(selectedBudgetRatio.getName());
-        ratioText.append("" + selectedBudgetRatio.getRatio());
+        ratioText.append("Portion: " + selectedBudgetRatio.getRatio());
+    }
+
+    public void MoveToViewBudgetActivity(View view){
+        Intent intent = new Intent(this, ViewBudgets.class);
+        startActivity(intent);
+        finish();
     }
 }

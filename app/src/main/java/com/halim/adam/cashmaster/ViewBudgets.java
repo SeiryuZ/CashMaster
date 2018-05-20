@@ -46,11 +46,10 @@ public class ViewBudgets extends Activity {
         final Integer[] budgetIdArray = budgetIdList.toArray(new Integer[budgetIdList.size()]);
 
         //fill ListView
-        ListView listView;
+        ListView listView = (ListView) findViewById(R.id.budgetList);
 
         BudgetListAdapter adapter = new BudgetListAdapter(this, budgetIdList.toArray(new Integer[budgetIdList.size()]),
                 budgetNameList.toArray(new String[budgetNameList.size()]), ratioList.toArray(new Float[budgetRatioList.size()]), budgetTotalList.toArray(new Float[budgetTotalList.size()]));
-        listView = (ListView) findViewById(R.id.budgetList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,12 +58,37 @@ public class ViewBudgets extends Activity {
                 Intent intent = new Intent(ViewBudgets.this, EditBudget.class);
                 intent.putExtra("id", budgetIdArray[position]);
                 startActivity(intent);
+                finish();
             }
         });
     }
 
     public void MoveToTransactionHistoryPage(View view) {
         Intent intent = new Intent(this, TransactionHistory.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewCategoryActivity(View view){
+        Intent intent = new Intent(this, ViewCategories.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewIncomeActivity(View view){
+        Intent intent = new Intent(this, ViewIncomes.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewSpendingActivity(View view){
+        Intent intent = new Intent(this, ViewSpendings.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToAddBudgetRatioActivity(View view){
+        Intent intent = new Intent(this, AddNewBudgetRatio.class);
         startActivity(intent);
         finish();
     }
