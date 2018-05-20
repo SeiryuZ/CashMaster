@@ -15,7 +15,6 @@ public class CategoryListAdapter extends ArrayAdapter {
     private final String[] nameArray;
 
     public CategoryListAdapter(Activity context, Integer[] idArray, String[] nameArray){
-
         super(context, R.layout.categories_list, nameArray);
 
         this.context = context;
@@ -34,6 +33,5 @@ public class CategoryListAdapter extends ArrayAdapter {
         nameTextField.setText(nameArray[position]);
 
         return rowView;
-
     }
 }
