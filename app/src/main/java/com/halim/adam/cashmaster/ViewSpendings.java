@@ -95,4 +95,10 @@ public class ViewSpendings extends Activity {
         startActivity(intent);
         finish();
     }
+
+    public void MoveToAddSpendingActivity(View view){
+        Intent intent = new Intent(this, AddNewSpending.class);
+        startActivity(intent);
+        finish();
+    }
 }
