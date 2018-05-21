@@ -23,29 +23,29 @@ public class ViewCategories extends Activity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
         ArrayList<Category> categoryList = dbHelper.GetCategoryList();
-        Integer[] categoryIdArray;
-        String[] categoryNameArray;
+        Integer[] idArray;
+        String[] nameArray;
 
         if(categoryList != null) {
-            categoryIdArray = new Integer[categoryList.size()];
-            categoryNameArray = new String[categoryList.size()];
+            idArray = new Integer[categoryList.size()];
+            nameArray = new String[categoryList.size()];
 
             for (int c = 0; c < categoryList.size(); c++) {
-                categoryIdArray[c] = categoryList.get(c).getId();
-                categoryNameArray[c] = categoryList.get(c).getName();
+                idArray[c] = categoryList.get(c).getId();
+                nameArray[c] = categoryList.get(c).getName();
             }
 
             // fill list
             ListView categoryListView = (ListView) findViewById(R.id.categoryList);
-            CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, categoryIdArray, categoryNameArray);
+            CategoryListAdapter categoryListAdapter = new CategoryListAdapter(this, idArray, nameArray);
             categoryListView.setAdapter(categoryListAdapter);
 
-            final Integer[] idArray = categoryIdArray;
+            final Integer[] ID_ARRAY = idArray;
             categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(ViewCategories.this, EditCategory.class);
-                    intent.putExtra("id", idArray[position]);
+                    intent.putExtra("id", ID_ARRAY[position]);
                     startActivity(intent);
                     finish();
                 }

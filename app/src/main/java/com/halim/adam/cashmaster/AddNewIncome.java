@@ -53,16 +53,24 @@ public class AddNewIncome extends Activity {
         // divide to budgets
         Income latestIncome = dbHelper.GetLatestIncome();
         for(int c = 0; c < budgetRatioList.size(); c++){
-            dbHelper.InsertBudget(budgetRatioList.get(c).getId(), latestIncome.getId(), latestIncome.getAmount() * budgetRatioList.get(c).getRatio());
+            dbHelper.InsertBudget(budgetRatioList.get(c).getId(), latestIncome.getId(), latestIncome.getAmount() * budgetRatioList.get(c).getRatio() / ratioTotal);
         }
 
         // move to ViewIncome
         Intent intent = new Intent(this, ViewIncomes.class);
         startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewIncomeActivity(View view){
+        Intent intent = new Intent(this, ViewIncomes.class);
+        startActivity(intent);
+        finish();
     }
 
     public void MoveToTransactionHistoryPage(View view) {
         Intent intent = new Intent(this, TransactionHistory.class);
         startActivity(intent);
+        finish();
     }
 }

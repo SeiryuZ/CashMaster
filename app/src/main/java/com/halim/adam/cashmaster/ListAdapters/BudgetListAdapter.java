@@ -39,7 +39,7 @@ public class BudgetListAdapter extends ArrayAdapter {
         //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray[position]);
         ratioTextField.setText("Portion: " + ratioArray[position]);
-        amountTextField.setText(amountArray[position].toString());
+        amountTextField.setText(String.format("%.0f", amountArray[position]));
 
         return rowView;
 

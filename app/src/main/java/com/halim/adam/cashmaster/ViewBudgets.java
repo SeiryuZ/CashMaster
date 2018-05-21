@@ -24,43 +24,51 @@ public class ViewBudgets extends Activity {
 
         // get data
         ArrayList<BudgetRatio> budgetRatioList = dbHelper.GetBudgetRatioList();
-        final ArrayList<Integer> budgetIdList = new ArrayList<>();
-        ArrayList<String> budgetNameList = new ArrayList<>();
-        ArrayList<Float> ratioList = new ArrayList<>();
-        ArrayList<Float> budgetTotalList = new ArrayList<>();
+        Integer[] idArray;
+        String[] nameArray;
+        Float[] ratioArray;
+        Float[] totalArray;
 
-        for(int c = 0; c < budgetRatioList.size(); c++){
-            budgetIdList.add(budgetRatioList.get(c).getId());
-            budgetNameList.add(budgetRatioList.get(c).getName());
-            ratioList.add(budgetRatioList.get(c).getRatio());
+        if(budgetRatioList != null){
+            idArray = new Integer[budgetRatioList.size()];
+            nameArray = new String[budgetRatioList.size()];
+            ratioArray = new Float[budgetRatioList.size()];
+            totalArray = new Float[budgetRatioList.size()];
 
-            // get budget total
-            ArrayList<Budget> budgetList = dbHelper.GetBudgetFromRatio(budgetRatioList.get(c).getId());
-            float budgetTotal = 0;
-            if(budgetList != null){
-                budgetTotal += budgetList.get(c).getAmount();
+            for(int c = 0; c < budgetRatioList.size(); c++){
+                idArray[c] = budgetRatioList.get(c).getId();
+                nameArray[c] = budgetRatioList.get(c).getName();
+                ratioArray[c] = budgetRatioList.get(c).getRatio();
+
+                // get budget total
+                ArrayList<Budget> budgetList = dbHelper.GetBudgetFromRatio(budgetRatioList.get(c).getId());
+                float budgetTotal = 0;
+                if(budgetList != null){
+                    for(int c1 = 0; c1 < budgetList.size(); c1++) {
+                        budgetTotal += budgetList.get(c1).getAmount();
+                    }
+                }
+                totalArray[c] = budgetTotal;
             }
-            budgetTotalList.add(budgetTotal);
+
+            final Integer[] ID_ARRAY = idArray;
+
+            //fill ListView
+            ListView listView = (ListView) findViewById(R.id.budgetList);
+
+            BudgetListAdapter adapter = new BudgetListAdapter(this, idArray, nameArray, ratioArray, totalArray);
+            listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ViewBudgets.this, EditBudget.class);
+                    intent.putExtra("id", ID_ARRAY[position]);
+                    startActivity(intent);
+                    finish();
+                }
+            });
         }
-
-        final Integer[] budgetIdArray = budgetIdList.toArray(new Integer[budgetIdList.size()]);
-
-        //fill ListView
-        ListView listView = (ListView) findViewById(R.id.budgetList);
-
-        BudgetListAdapter adapter = new BudgetListAdapter(this, budgetIdList.toArray(new Integer[budgetIdList.size()]),
-                budgetNameList.toArray(new String[budgetNameList.size()]), ratioList.toArray(new Float[budgetRatioList.size()]), budgetTotalList.toArray(new Float[budgetTotalList.size()]));
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ViewBudgets.this, EditBudget.class);
-                intent.putExtra("id", budgetIdArray[position]);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     public void MoveToTransactionHistoryPage(View view) {

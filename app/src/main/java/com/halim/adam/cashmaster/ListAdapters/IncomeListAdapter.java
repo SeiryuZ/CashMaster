@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.halim.adam.cashmaster.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class IncomeListAdapter extends ArrayAdapter {
@@ -17,6 +18,7 @@ public class IncomeListAdapter extends ArrayAdapter {
     private final String[] nameArray;
     private final Float[] amountArray;
     private final Date[] dateArray;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public IncomeListAdapter (Activity context, Integer[] idArray, String[] nameArray, Float[] amountArray, Date[] dateArray){
         super(context, R.layout.categories_list, nameArray);
@@ -34,9 +36,13 @@ public class IncomeListAdapter extends ArrayAdapter {
 
         //this code gets references to objects in the listview_row.xml file
         TextView nameTextField = (TextView) rowView.findViewById(R.id.nameText);
+        TextView amountTextField = (TextView) rowView.findViewById(R.id.amountText);
+        TextView dateTextField = (TextView) rowView.findViewById(R.id.dateText);
 
         //this code sets the values of the objects to values from the arrays
         nameTextField.setText(nameArray[position]);
+        amountTextField.setText("" + amountArray[position]);
+        dateTextField.setText(DATE_FORMAT.format(dateArray[position]));
 
         return rowView;
     }

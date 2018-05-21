@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ViewIncomes">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:onClick="MoveToAddIncomeActivity"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="@+id/incomeList"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <Button
         android:id="@+id/categories2"
         android:layout_width="0dp"

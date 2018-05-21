@@ -20,7 +20,7 @@
         <activity android:name=".AddNewIncome" />
         <activity android:name=".AddNewBudgetRatio" />
         <activity android:name=".TransactionHistory" />
-        <!--<activity android:name=".Statistics" />-->
+        <!-- <activity android:name=".Statistics" /> -->
         <activity android:name=".AddNewCategory" />
         <activity android:name=".ViewCategories" />
         <activity android:name=".ViewBudgets" />
@@ -31,6 +31,7 @@
         <activity android:name=".EditCategory" />
         <activity android:name=".EditBudget" />
         <activity android:name=".ViewBudgetRatios" />
+        <activity android:name=".EditIncome"></activity>
     </application>
 
 </manifest>

@@ -28,7 +28,6 @@ public class TransactionHistory extends Activity {
             e.printStackTrace();
         }
         if(spending != null){
-            transactionList.append(spending.getName());
         }
     }
 

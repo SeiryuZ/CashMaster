@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Statistics extends Activity {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +29,13 @@ public class Statistics extends Activity {
         float incomeTotalPrice = 0;
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
+
+//        dbHelper.InsertCategory("Drinks");
+//        dbHelper.InsertBudgetRatio("Investments", 20);
+//        dbHelper.InsertBudgetRatio("Optionals", 30);
+//        dbHelper.InsertBudgetRatio("Essentials", 50);
+//        dbHelper.InsertSpending("Cookie Cream Coffee Bean", 77000, 1, 2);
+//        dbHelper.InsertIncome("3 Week", 1500000);
 
         try {
             spendingList = dbHelper.GetSpendingFromDate(new Date(), 7);

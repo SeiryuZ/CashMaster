@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE);";
+        String sql = "CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.execute();
         sql = "CREATE TABLE income (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount NUMERIC, date TEXT DEFAULT (date('now')));";
@@ -91,16 +91,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stmt.executeInsert();
         db.close();
     }
-    public void InsertSpending(String name, float amount, int categoryId, int budgetId, Date date){
+    public void InsertSpending(String name, float amount, int categoryId, int ratioId, Date date){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, date, amount, categoryId, budgetId) VALUES ('" + name + "', '" + DATE_FORMAT.format(date) + "', '" + amount + "', '" + categoryId + "', '" + budgetId +  "');";
+        String sql = "INSERT INTO spending (name, date, amount, categoryId, ratioId) VALUES ('" + name + "', '" + DATE_FORMAT.format(date) + "', '" + amount + "', '" + categoryId + "', '" + ratioId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
     }
-    public void InsertSpending(String name, float amount, int categoryId, int budgetId){
+    public void InsertSpending(String name, float amount, int categoryId, int ratioId){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO spending (name, amount, categoryId, budgetId) VALUES ('" + name + "', '" + amount + "', '" + categoryId + "', '" + budgetId +  "');";
+        String sql = "INSERT INTO spending (name, amount, categoryId, ratioId) VALUES ('" + name + "', '" + amount + "', '" + categoryId + "', '" + ratioId +  "');";
         SQLiteStatement stmt = db.compileStatement(sql);
         stmt.executeInsert();
         db.close();
@@ -445,7 +445,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
 
     public ArrayList<Budget> GetBudgetFromRatio(int ratioId){
-        ArrayList<Budget> budgetList = new ArrayList<Budget>();
+        ArrayList<Budget> budgetList = new ArrayList<>();
         Budget budget;
 
         SQLiteDatabase db = this.getReadableDatabase();
