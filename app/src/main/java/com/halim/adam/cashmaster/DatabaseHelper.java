@@ -377,6 +377,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
+    public ArrayList<Spending> GetSpendingFromRatio(int ratioId) throws ParseException {
+        ArrayList<Spending> spendingArrayList = new ArrayList<Spending>();
+        Spending spending;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "SELECT * FROM spending WHERE ratioId = '" + ratioId + "';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            for (int c = 0; c < cursor.getCount(); c++) {
+                spending = new Spending();
+
+                spending.setId(cursor.getInt(0));
+                spending.setName(cursor.getString(1));
+                spending.setDate(DATE_FORMAT.parse(cursor.getString(2)));
+                spending.setAmount(cursor.getFloat(3));
+                spending.setCategoryId(cursor.getInt(4));
+                spending.setRatioId(cursor.getInt(5));
+
+                spendingArrayList.add(spending);
+
+                cursor.moveToNext();
+            }
+            db.close();
+            return spendingArrayList;
+        } else {
+            db.close();
+            return null;
+        }
+    }
     public Budget GetBudget(int id){
         Budget budget = new Budget();
 

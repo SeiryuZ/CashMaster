@@ -50,8 +50,8 @@ public class ViewSpendings extends Activity {
                 nameArray[c] = spendingList.get(c).getName();
                 dateArray[c] = spendingList.get(c).getDate();
                 amountArray[c] = spendingList.get(c).getAmount();
-                categoryArray[c] = dbHelper.GetCategory(spendingList.get(c).getId()).getName();
-                ratioArray[c] = dbHelper.GetBudgetRatio(spendingList.get(c).getId()).getName();
+                categoryArray[c] = dbHelper.GetCategory(spendingList.get(c).getCategoryId()).getName();
+                ratioArray[c] = dbHelper.GetBudgetRatio(spendingList.get(c).getRatioId()).getName();
             }
 
             // fill list

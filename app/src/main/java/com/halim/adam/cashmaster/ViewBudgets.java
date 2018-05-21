@@ -10,7 +10,9 @@ import android.widget.ListView;
 import com.halim.adam.cashmaster.ListAdapters.BudgetListAdapter;
 import com.halim.adam.cashmaster.Objects.Budget;
 import com.halim.adam.cashmaster.Objects.BudgetRatio;
+import com.halim.adam.cashmaster.Objects.Spending;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class ViewBudgets extends Activity {
@@ -42,10 +44,21 @@ public class ViewBudgets extends Activity {
 
                 // get budget total
                 ArrayList<Budget> budgetList = dbHelper.GetBudgetFromRatio(budgetRatioList.get(c).getId());
+                ArrayList<Spending> spendingList = null;
+                try {
+                    spendingList = dbHelper.GetSpendingFromRatio(budgetRatioList.get(c).getId());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 float budgetTotal = 0;
                 if(budgetList != null){
                     for(int c1 = 0; c1 < budgetList.size(); c1++) {
                         budgetTotal += budgetList.get(c1).getAmount();
+                    }
+                }
+                if(spendingList != null){
+                    for(int c1 = 0; c1 < spendingList.size(); c1++) {
+                        budgetTotal -= spendingList.get(c1).getAmount();
                     }
                 }
                 totalArray[c] = budgetTotal;
