@@ -29,6 +29,10 @@ public class EditBudget extends Activity {
         ratioText.append("Portion: " + selectedBudgetRatio.getRatio());
     }
 
+    public void GetInput(){
+
+    }
+
     public void MoveToViewBudgetActivity(View view){
         Intent intent = new Intent(this, ViewBudgets.class);
         startActivity(intent);

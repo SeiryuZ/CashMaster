@@ -52,6 +52,12 @@ public class AddNewSpending extends Activity {
 
     }
 
+    public void MoveToViewSpendingActivity(View view){
+        Intent intent = new Intent(this, ViewSpendings.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void MoveToTransactionHistoryPage(View view){
         Intent intent = new Intent(this, TransactionHistory.class);
         startActivity(intent);

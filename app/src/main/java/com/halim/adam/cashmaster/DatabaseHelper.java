@@ -632,4 +632,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
+
+    /*
+    EDIT ROWS
+     */
+
+    public void UpdateBudgetRatio(BudgetRatio budgetRatio){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE budget_ratio SET name = '" + budgetRatio.getName() + "', ratio = '" + budgetRatio.getRatio() + "' WHERE id = '" + budgetRatio.getId() + "';";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.execute();
+        db.close();
+    }
+
+    public void UpdateCategory(Category category){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE category SET name = '" + category.getName() + "' WHERE id = '" + category.getId() + "';";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.execute();
+        db.close();
+    }
+
+    public void UpdateIncome(Income income){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.execute();
+        db.close();
+    }
+
+    public void UpdateSpending(Spending spending){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "";
+        SQLiteStatement stmt = db.compileStatement(sql);
+        stmt.execute();
+        db.close();
+    }
 }
