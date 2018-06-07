@@ -84,8 +84,8 @@ public class ViewBudgets extends Activity {
         }
     }
 
-    public void MoveToTransactionHistoryPage(View view) {
-        Intent intent = new Intent(this, TransactionHistory.class);
+    public void MoveToStatisticsPage(View view) {
+        Intent intent = new Intent(this, Statistics.class);
         startActivity(intent);
         finish();
     }

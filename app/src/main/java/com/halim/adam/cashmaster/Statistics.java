@@ -97,8 +97,26 @@ public class Statistics extends Activity {
         statisticsText.append("Income for the last 30 days: " + incomeTotalPrice + "\n");
     }
 
-    public void MoveToTransactionHistoryPage(View view) {
-        Intent intent = new Intent(this, TransactionHistory.class);
+    public void MoveToViewCategoryActivity(View view){
+        Intent intent = new Intent(this, ViewCategories.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewIncomeActivity(View view){
+        Intent intent = new Intent(this, ViewIncomes.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewSpendingActivity(View view){
+        Intent intent = new Intent(this, ViewSpendings.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewBudgetActivity(View view){
+        Intent intent = new Intent(this, ViewBudgets.class);
         startActivity(intent);
         finish();
     }

@@ -82,4 +82,10 @@ public class ViewCategories extends Activity {
         startActivity(intent);
         finish();
     }
+
+    public void MoveToStatisticsPage(View view) {
+        Intent intent = new Intent(this, Statistics.class);
+        startActivity(intent);
+        finish();
+    }
 }
