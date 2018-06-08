@@ -1,18 +1,17 @@
 package com.halim.adam.cashmaster.Objects;
 
-/**
- * Created by Adam on 27-Apr-18.
- */
-
-public class Category {
+public class BudgetRatio {
     private int id;
     private String name;
+    private float ratio;
 
-    public Category(){}
+    public BudgetRatio() {
+    }
 
-    public Category(int id, String name){
+    public BudgetRatio(int id, String name, float ratio) {
         this.id = id;
         this.name = name;
+        this.ratio = ratio;
     }
 
     public int getId() {
@@ -29,5 +28,13 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public float getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio;
     }
 }

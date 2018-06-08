@@ -2,46 +2,62 @@ package com.halim.adam.cashmaster;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.halim.adam.cashmaster.Objects.Spending;
+
+import java.text.ParseException;
+
 public class TransactionHistory extends Activity {
-    protected Cursor cursor;
     TextView transactionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history);
-        transactionList = (TextView) findViewById(R.id.transactionList);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.InsertIncome("Baby", 800);
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        cursor = db.rawQuery("SELECT * FROM income", null);
-        cursor.moveToFirst();
-        if(cursor.moveToFirst()){
-            for(int c = 0; c < cursor.getColumnCount(); c++){
-                transactionList.append(cursor.getString(c).toString() + ", ");
-            }
+        Spending spending = null;
+        try {
+            spending = dbHelper.GetSpending(1);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        else{
-            transactionList.setText("Still Empty!");
+        if(spending != null){
         }
     }
 
-    public void MoveToNewSpendingActivity(View view){
-        Intent intent = new Intent(this, AddNewSpending.class);
+    public void MoveToViewCategoryActivity(View view){
+        Intent intent = new Intent(this, ViewCategories.class);
         startActivity(intent);
+        finish();
     }
 
-    public void MoveToNewIncomePage(View view){
-        Intent intent = new Intent(this, AddNewIncome.class);
+    public void MoveToViewIncomeActivity(View view){
+        Intent intent = new Intent(this, ViewIncomes.class);
         startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewSpendingActivity(View view){
+        Intent intent = new Intent(this, ViewSpendings.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToViewBudgetActivity(View view){
+        Intent intent = new Intent(this, ViewBudgets.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void MoveToStatisticsPage(View view) {
+        Intent intent = new Intent(this, Statistics.class);
+        startActivity(intent);
+        finish();
     }
 }

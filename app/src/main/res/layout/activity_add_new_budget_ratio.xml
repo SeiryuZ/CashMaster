@@ -4,8 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddNewIncome"
+    tools:context=".AddNewBudgetRatio"
     tools:layout_editor_absoluteY="81dp">
+
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="MoveToViewBudgetActivity"
+        android:text="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/inputName"
@@ -15,62 +26,35 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/name_of_income"
+        android:hint="Name of budget"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton" />
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="444dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="MoveToViewIncomeActivity"
-        android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button25" />
 
     <EditText
-        android:id="@+id/inputDate"
+        android:id="@+id/inputPortion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/date_of_income_yyyy_mm_dd"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputAmount" />
-
-    <EditText
-        android:id="@+id/inputAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/amount_of_income"
+        android:hint="Income ratio for budget"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputName" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:onClick="GetInput"
-        android:text="@string/add"
+        android:text="Add"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputDate" />
+        app:layout_constraintTop_toBottomOf="@+id/inputPortion" />
 
 </android.support.constraint.ConstraintLayout>

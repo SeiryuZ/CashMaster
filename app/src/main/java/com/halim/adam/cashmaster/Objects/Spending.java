@@ -10,9 +10,20 @@ public class Spending {
     private int id;
     private String name;
     private Date date;
-    private float price;
+    private float amount;
     private int categoryId;
-    private int jarId;
+    private int ratioId;
+
+    public Spending(){}
+
+    public Spending(int id, String name, Date date, float amount, int categoryId, int ratioId) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.amount = amount;
+        this.categoryId = categoryId;
+        this.ratioId = ratioId;
+    }
 
     public int getId() {
         return id;
@@ -38,12 +49,12 @@ public class Spending {
         this.date = date;
     }
 
-    public float getPrice() {
-        return price;
+    public float getAmount() {
+        return amount;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     public int getCategoryId() {
@@ -54,11 +65,11 @@ public class Spending {
         this.categoryId = categoryId;
     }
 
-    public int getJarId() {
-        return jarId;
+    public int getRatioId() {
+        return ratioId;
     }
 
-    public void setJarId(int jarId) {
-        this.jarId = jarId;
+    public void setRatioId(int ratioId) {
+        this.ratioId = ratioId;
     }
 }

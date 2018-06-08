@@ -11,15 +11,15 @@
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:onClick="GetInput"
         android:text="@string/add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/jarSpinner" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBudget" />
 
     <EditText
-        android:id="@+id/addName"
+        android:id="@+id/inputName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -30,21 +30,21 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
         android:layout_marginStart="16dp"
-        android:onClick="MoveToTransactionHistoryPage"
+        android:layout_marginTop="16dp"
+        android:onClick="MoveToViewSpendingActivity"
         android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/addDate"
+        android:id="@+id/inputDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -55,31 +55,66 @@
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addName" />
+        app:layout_constraintTop_toBottomOf="@+id/inputName" />
 
     <EditText
-        android:id="@+id/addAmount"
+        android:id="@+id/inputAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         android:ems="10"
         android:hint="@string/amount_of_spending"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addDate" />
+        app:layout_constraintTop_toBottomOf="@+id/inputDate" />
 
     <Spinner
-        android:id="@+id/jarSpinner"
+        android:id="@+id/spinnerCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/inputAmount" />
+
+    <Spinner
+        android:id="@+id/spinnerBudget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:text="Budget:"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerBudget"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerBudget"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addAmount" />
+        app:layout_constraintTop_toTopOf="@+id/spinnerBudget" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:text="Category:"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerCategory"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinnerCategory" />
 
 </android.support.constraint.ConstraintLayout>
